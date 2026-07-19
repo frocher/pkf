@@ -401,7 +401,8 @@ context, to avoid re-litigating the same topics months later.
 | `status`              | Proposed, Approved, Implemented, Superseded (closed)   |
 
 Relations: `project` (1) · `decision_maker` → Stakeholder (1) ·
-`actions` → Action (0..n)
+`actions` → Action (0..n) · `superseded_by` → Decision (0..1) ·
+`supersedes` → Decision (0..n, inverse — §7.1)
 
 ### Delivery
 
@@ -623,6 +624,7 @@ without its counterpart:
 | `Risk.vendors`              | `Vendor.risks`              |
 | `Application.requirements`  | `Requirement.applications`  |
 | `Team.members`              | `Stakeholder.team`          |
+| `Decision.superseded_by`    | `Decision.supersedes`       |
 
 This table is exhaustive: every relation pair declared on both sides in
 §6 appears in it. `Team.members` is the exception to the child-side
