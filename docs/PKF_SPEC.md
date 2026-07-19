@@ -305,6 +305,11 @@ section in the body, and no `log.md` file (§9) — a bundle distributed
 outside a Git repository loses this information, which is an accepted
 trade-off rather than an oversight.
 
+This excludes forward-looking scheduled dates, such as `Risk.review_date`
+or `Dependency.due_date`: these are project data describing work still
+to come, not a record of what already happened, so they are not
+covered by the history deferral above.
+
 ### 5.3 General notes
 
 - Every object has a mandatory `id`.
@@ -487,6 +492,7 @@ A risk identified for a project.
 | `plan`                   | mitigation or contingency plan                                                         |
 | `response_strategy`      | Avoid, Mitigate, Transfer, Accept (closed)                                              |
 | `status`                  | Open, Under Review, Mitigated, Accepted, Closed, Occurred (closed)                    |
+| `review_date`             | date by which the risk should be re-assessed                                            |
 
 Relations: `project` (1) · `owner` → Stakeholder (1) · `vendors` → Vendor (0..n)
 
