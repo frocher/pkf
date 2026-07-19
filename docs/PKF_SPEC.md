@@ -81,7 +81,8 @@ software.
   normalized types.
 - **ID** — a short, stable identifier for an object, unique within the
   bundle, independent of its location in the tree (e.g. `R001`,
-  `A014`, `AS007`). Carried by the `id` frontmatter field.
+  `A014`, `AS007`). Carried by the `id` frontmatter field; grammar
+  defined in §3.1.
 - **Type** — an object's category (`Risk`, `Action`, `Milestone`...),
   carried by the `type` frontmatter field.
 - **Frontmatter** — a YAML metadata block delimited by `---` at the
@@ -101,6 +102,29 @@ software.
 - **View** — a derived representation, generated from objects and
   their relations (risk register, schedule, Excel table...), never
   hand-maintained.
+
+### 3.1 ID grammar
+
+Two forms, both uppercase-only:
+
+- **Default** (every type except `Project`) — one or more uppercase
+  letters followed by one or more digits, with no fixed digit width
+  (`R001`, `A014`, `AS007`, `SK2` are all valid). The prefix letters
+  are the author's choice; the mapping used throughout this document
+  and in `examples/` (`R` for Risk, `A` for Action, `SK` for
+  Skill...) is convention, not a rule enforced by tooling.
+- **`Project`** — `P-` followed by one or more uppercase letters,
+  digits, or hyphens (`P-PLATFORM`, `P-PORTAL`). This is a narrow,
+  named exception: no other type may use a slug form. Project ids
+  are referenced far more often, and are far lower in cardinality,
+  than any other type's, so eye-resolution is worth more here than
+  the collision-safety a padded number would buy.
+
+A lowercase `id` value is not valid grammar. This does not conflict
+with the lowercase filenames recommended in §4.3 — the filename is
+indicative, not canonical, and may freely lowercase the id it embeds.
+Relation resolution against an `id` is a case-sensitive exact string
+match (§7).
 
 ---
 
@@ -158,6 +182,19 @@ live at the bundle root, under the client, and are shared across all of
 that client's projects. Every other §6 object type that attaches to a
 project is project-scoped, living under that project's `project-*/`
 subfolder.
+
+Because ids must be unique within the bundle (§11.2) but nothing
+elsewhere reserves ranges or coordinates allocation, two branches can
+independently pick the same next id (e.g. both choosing `R004`), and
+neither branch's own CI will see the collision — each validates
+against the shared base plus only its own change. Bundles using this
+workflow SHOULD run a conformant validator (§11) as a required pull
+request check, **with the pull request's base branch required to be
+up to date with the target before merge is allowed** (e.g. GitHub's
+"require branches to be up to date before merging", or an equivalent
+setting). Without that requirement, two independently-passing pull
+requests can still land the same id, since each was validated before
+the other's change existed.
 
 ### 4.2 Multi-repo alternative
 
@@ -533,9 +570,12 @@ the narrative but is not resolved as a first-class relation by PKF
 tooling.
 
 A PKF tool resolves a relation by indexing all files in the bundle by
-their `id` field. A relation whose target does not exist in the bundle
-is NOT a blocking error: it may simply represent knowledge not yet
-captured. A validation tool (§11) MAY still flag it.
+their `id` field, using a case-sensitive exact string match — `r001`
+does not resolve to `R001`. Since ids are uppercase-only (§3.1), a
+lowercase relation value is invalid grammar rather than an alias a
+tool should normalize. A relation whose target does not exist in the
+bundle is NOT a blocking error: it may simply represent knowledge not
+yet captured. A validation tool (§11) MAY still flag it.
 
 A relation's target in §6 MAY be documented as a choice of types (e.g.
 `Client | Vendor`), when the field may point at an object of either
