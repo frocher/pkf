@@ -58,7 +58,7 @@ impact assessment, leading to delays and cost overruns.
 - [`docs/PKF_SPEC.md`](docs/PKF_SPEC.md) — the Project Knowledge Format
   specification: object types, bundle structure, relations, and
   conformance rules.
-- [`docs/OFK_SPEC.md`](docs/OFK_SPEC.md) — the Open Knowledge Format
+- [`docs/OKF_SPEC.md`](docs/OKF_SPEC.md) — the Open Knowledge Format
   specification, a related, more general format for representing
   knowledge around data and systems.
 - [`examples/client-northwind/`](examples/client-northwind/) — a full

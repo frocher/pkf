@@ -10,7 +10,7 @@ documents — there is no application code, build system, or test suite:
 - `docs/PKF_SPEC.md` — Project Knowledge Format: a spec for representing
   a project's risks, actions, decisions, milestones, deliveries, and
   stakeholders as a graph of structured Markdown+YAML objects.
-- `docs/OFK_SPEC.md` — Open Knowledge Format: a related, more general
+- `docs/OKF_SPEC.md` — Open Knowledge Format: a related, more general
   spec for representing knowledge around data and systems.
 - `README.md` — entry point and overview.
 - `LICENSE.md` — Apache License 2.0.
