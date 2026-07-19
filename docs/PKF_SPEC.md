@@ -469,13 +469,22 @@ side.
 
 | Field           | Type / Values                                              |
 |-----------------|-----------------------------------------------------------|
-| `organization`  | the entity they belong to (client, vendor, internal...)    |
 | `job_title`     | general function (Sponsor, Product Owner, Developer...)    |
 | `email`         | —                                                            |
 | `phone`         | —                                                            |
 
-Relations: `team` → Team (0..1, inverse — §7.1) · involved in `0..n`
-projects via `Assignment` (§8), never as a direct field.
+Relations: `organization` → Client | Vendor (0..1, absent = internal
+· multi-type target, see §7) · `team` → Team (0..1, inverse — §7.1) ·
+involved in `0..n` projects via `Assignment` (§8), never as a direct
+field.
+
+`organization` is the stakeholder's fixed home entity — an identity
+fact, authored once regardless of how many projects they work on. It
+is distinct from `Assignment.side` (§8), which is which side of the
+table they sit on for one specific project engagement: the two
+usually agree but are authored independently and can diverge (e.g. a
+contractor who is internal on one engagement and a vendor on
+another).
 
 ### Team
 
@@ -523,6 +532,11 @@ A PKF tool resolves a relation by indexing all files in the bundle by
 their `id` field. A relation whose target does not exist in the bundle
 is NOT a blocking error: it may simply represent knowledge not yet
 captured. A validation tool (§11) MAY still flag it.
+
+A relation's target in §6 MAY be documented as a choice of types (e.g.
+`Client | Vendor`), when the field may point at an object of either
+type. Resolution is unchanged: the tool looks the `id` up in the
+bundle index and reads whatever `type` it finds there.
 
 The cardinalities listed in §6 are a modeling recommendation, not a
 low-level constraint of the format: a PKF file remains syntactically
@@ -580,6 +594,16 @@ on a given project is never a duplicated field on the `Stakeholder`:
 it is a separate relation, carried by an `Assignment` object specific
 to that project.
 
+`client.md`:
+
+```yaml
+---
+id: C001
+type: Client
+title: "Acme"
+---
+```
+
 `stakeholders/s001-jean-dupont.md`:
 
 ```yaml
@@ -587,7 +611,7 @@ to that project.
 id: S001
 type: Stakeholder
 title: "Jean Dupont"
-organization: client-acme
+organization: C001
 email: jean.dupont@acme.com
 ---
 ```
