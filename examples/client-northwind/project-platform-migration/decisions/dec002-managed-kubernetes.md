@@ -9,6 +9,6 @@ decision: "Use CloudScale's managed Kubernetes offering."
 rationale: "Removes control-plane operational burden from a small team already stretched by the migration timeline."
 decision_maker: S002
 decision_date: 2026-06-25
-impact: "Slightly higher hosting cost; no need to hire dedicated platform ops staff for the migration."
+impact_description: "Slightly higher hosting cost; no need to hire dedicated platform ops staff for the migration."
 status: Approved
 ---

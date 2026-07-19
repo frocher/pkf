@@ -9,6 +9,6 @@ decision: "Build a shared component library with design tokens, consumed by both
 rationale: "A style guide document alone has not stopped drift in the past; a shared library enforces consistency at the code level."
 decision_maker: S004
 decision_date: 2026-07-01
-impact: "Requires two weeks of upfront investment from the design and frontend teams before feature work resumes."
+impact_description: "Requires two weeks of upfront investment from the design and frontend teams before feature work resumes."
 status: Approved
 ---

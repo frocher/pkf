@@ -342,15 +342,15 @@ Relations: `stakeholder` (1) · `skill` (1)
 Preserves important decisions, their justification, and their
 context, to avoid re-litigating the same topics months later.
 
-| Field             | Type / Values                                          |
-|--------------------|------------------------------------------------------------|
-| `context`          | text — the situation that required a decision              |
-| `alternatives`     | text — options considered                                   |
-| `decision`         | text — the final validated choice                           |
-| `rationale`        | text — the main reasons behind the decision                 |
-| `decision_date`    | date                                                          |
-| `impact`           | text — consequences (technical, schedule, budget...)        |
-| `status`           | Proposed, Approved, Implemented, Superseded                 |
+| Field                 | Type / Values                                          |
+|-----------------------|--------------------------------------------------------|
+| `context`             | text — the situation that required a decision          |
+| `alternatives`        | text — options considered                              |
+| `decision`            | text — the final validated choice                      |
+| `rationale`           | text — the main reasons behind the decision            |
+| `decision_date`       | date                                                   |
+| `impact_description`  | text — consequences (technical, schedule, budget...)   |
+| `status`              | Proposed, Approved, Implemented, Superseded            |
 
 Relations: `project` (1) · `decision_maker` → Stakeholder (1) ·
 `actions` → Action (0..n)
@@ -399,7 +399,7 @@ an important checkpoint.
 | `due_date`                 | date                                                        |
 | `status`                   | Planned, In Progress, Achieved, Delayed, Cancelled         |
 | `acceptance_criteria`      | text                                                          |
-| `impact`                   | consequences of a delay                                     |
+| `impact_description`       | consequences of a delay                                     |
 
 Relations: `project` (1) · `owner` → Stakeholder (1) · `deliveries` →
 Delivery (0..n, inverse — §7.1) · `dependencies` → Dependency (0..n,
