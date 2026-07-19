@@ -840,7 +840,7 @@ client: C001
 
 `project-test-runs/risks/r001-scope-creep.md`:
 
-```yaml
+```markdown
 ---
 id: R001
 type: Risk
