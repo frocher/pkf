@@ -1,0 +1,8 @@
+---
+id: P-PLATFORM
+type: Project
+title: "Platform Migration"
+client: C001
+milestones: [M001, M002]
+deliveries: [D001, D002]
+---

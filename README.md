@@ -61,6 +61,9 @@ impact assessment, leading to delays and cost overruns.
 - [`docs/OFK_SPEC.md`](docs/OFK_SPEC.md) — the Open Knowledge Format
   specification, a related, more general format for representing
   knowledge around data and systems.
+- [`examples/client-northwind/`](examples/client-northwind/) — a full
+  example bundle exercising every object type in the PKF spec,
+  including cross-project relations and intentional edge cases.
 
 ## Status
 
