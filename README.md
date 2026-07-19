@@ -34,7 +34,7 @@ client-acme/
         └── as001-jdupont-sponsor.md
 ```
 
-```yaml
+```markdown
 ---
 id: R001
 type: Risk
