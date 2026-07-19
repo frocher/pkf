@@ -417,7 +417,7 @@ A risk identified for a project.
 | `category`               | Technical, Functional, Security, Infrastructure, Vendor, Schedule, Budget, Quality, Compliance, Organizational |
 | `probability`            | Low, Medium, High, Very High                                                          |
 | `impact`                 | Low, Medium, High, Critical                                                           |
-| `score`                  | Low, Medium, High, Critical — computed from probability × impact                     |
+| `score`                  | Low, Medium, High, Critical — derived from probability × impact (optional; matrix in Appendix B) |
 | `plan`                   | mitigation or contingency plan                                                         |
 | `response_strategy`      | Avoid, Mitigate, Transfer, Accept                                                       |
 | `status`                  | Open, Under Review, Mitigated, Accepted, Closed, Occurred                             |
@@ -650,8 +650,10 @@ A bundle is **conformant** with PKF v0.1 if:
 A business validation tool (planned for the Validation phase of the
 PKF roadmap) MAY add stricter rules — cardinalities from §6 satisfied,
 enumeration values within the expected list, relations resolved,
-inverse relations (§7.1) not hand-authored — without these rules being
-a condition for base format conformance.
+inverse relations (§7.1) not hand-authored, derived fields such as
+`Risk.score` matching their computation (Appendix B) rather than a
+stale hand-authored value — without these rules being a condition for
+base format conformance.
 
 Consumers MUST NOT reject a bundle because of:
 
@@ -782,3 +784,20 @@ side: Client
 status: Active
 ---
 ```
+
+---
+
+## Appendix B — Risk score matrix
+
+`Risk.score` is derived from `probability` and `impact`: a tool
+computes it rather than reading a hand-authored value, per Goal 4
+(§1) — a stored, hand-maintained `score` would desynchronize from
+`probability`/`impact` as soon as either is edited. `score` MAY be
+omitted from a bundle; when present, it SHOULD match this matrix.
+
+| probability \ impact | Low    | Medium | High     | Critical |
+|-----------------------|--------|--------|----------|----------|
+| Low                   | Low    | Medium | Medium   | Medium   |
+| Medium                | Medium | Medium | High     | High     |
+| High                  | Medium | High   | High     | Critical |
+| Very High             | Medium | High   | Critical | Critical |
