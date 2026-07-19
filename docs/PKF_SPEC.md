@@ -112,14 +112,14 @@ project:
 
 ```
 client-acme/
-├── client.yaml
+├── client.md
 ├── stakeholders/
 │   ├── s001-jean-dupont.md
 │   └── s002-new-developer.md
 ├── vendors/
 │   └── v001-hosting-provider-x.md
 ├── project-migration-api/
-│   ├── project.yaml
+│   ├── project.md
 │   ├── milestones/
 │   ├── deliveries/
 │   ├── risks/
@@ -131,7 +131,7 @@ client-acme/
 │   └── team/
 │       └── as001-jdupont-sponsor.md
 └── project-test-runs/
-    ├── project.yaml
+    ├── project.md
     ├── milestones/
     ├── ...
     └── team/
@@ -149,7 +149,7 @@ file traversal.
 ### 4.2 Multi-repo alternative
 
 If strict isolation is required: one repository per project, with the
-shared base (`client.yaml`, `stakeholders/`, `vendors/`) in a separate
+shared base (`client.md`, `stakeholders/`, `vendors/`) in a separate
 repository referenced as a Git submodule. This solves permissions, at
 the cost of an aggregation script for any cross-project question.
 
@@ -165,9 +165,23 @@ relations that reference it.
 
 | File            | Role                                                    |
 |-----------------|-----------------------------------------------------------|
-| `client.yaml`   | The `Client` object at the bundle root.                  |
-| `project.yaml`  | The `Project` object at the root of a project subfolder. |
+| `client.md`     | The `Client` object at the bundle root.                  |
+| `project.md`    | The `Project` object at the root of a project subfolder. |
 | `index.md`      | Optional. Directory listing (§9).                        |
+
+`client.md` and `project.md` are ordinary objects (§5) — frontmatter
+plus an optional body, exactly like a Risk or a Milestone. Only their
+filename and location are reserved, marking which object in the tree is
+the Client and which is the Project.
+
+The `.md` extension is deliberate: these files are Markdown carrying a
+frontmatter block, not YAML documents, and a `.yaml` extension invites
+a consumer to parse the whole file as YAML — which §5.1 forbids, for
+reasons that apply to reserved files exactly as they do to any other
+object.
+
+`index.md` is the exception: it carries no frontmatter and is not an
+object (§9).
 
 ---
 
@@ -203,6 +217,14 @@ project: <project ID>       # required for any object attached to a project
 **Extensions:** any additional field is allowed. PKF tools MUST
 preserve unknown fields and MUST NOT reject a document for that reason
 alone.
+
+**Reading an object:** split the file at the frontmatter fences, parse
+the block between them as YAML, and keep the remainder as Markdown
+(§5.2). A consumer MUST NOT parse an object file as a single YAML
+document: the fences make it a two-document stream, so the body is
+either silently discarded or a syntax error, depending on the parser
+and on what the Markdown contains. This read path applies to every
+object, reserved files (§4.4) included.
 
 ### 5.2 Body
 
@@ -622,7 +644,7 @@ A bundle is **conformant** with PKF v0.1 if:
 2. Every frontmatter block contains a non-empty `id` field, unique
    within the bundle.
 3. Every frontmatter block contains a non-empty `type` field.
-4. The reserved files (`client.yaml`, `project.yaml`, `index.md`)
+4. The reserved files (`client.md`, `project.md`, `index.md`)
    follow the structure described in §4.4 and §9 when present.
 
 A business validation tool (planned for the Validation phase of the
@@ -642,8 +664,16 @@ Consumers MUST NOT reject a bundle because of:
 
 ## 12. Versioning
 
-This document specifies PKF version **0.1**. Future revisions will be
-versioned as `<major>.<minor>`:
+This document specifies PKF version **0.1**. Revisions are versioned as
+`<major>.<minor>`.
+
+While the major version is **0**, the specification is unstable: a
+revision MAY introduce breaking changes without bumping the version at
+all. `pkf_version` therefore identifies the series, not a stable
+contract — a `0.x` bundle SHOULD be read against the current draft
+rather than pinned to the revision it was written under.
+
+From **1.0** onward:
 
 - a **minor** bump adds optional fields or types without breaking
   compatibility;
@@ -651,7 +681,7 @@ versioned as `<major>.<minor>`:
   of reserved files.
 
 A bundle MAY declare the PKF version it targets via
-`pkf_version: "0.1"` in the `client.yaml` frontmatter.
+`pkf_version: "0.1"` in the `client.md` frontmatter.
 
 ---
 
@@ -659,11 +689,11 @@ A bundle MAY declare the PKF version it targets via
 
 ```
 client-acme/
-├── client.yaml
+├── client.md
 ├── stakeholders/
 │   └── s001-jean-dupont.md
 └── project-test-runs/
-    ├── project.yaml
+    ├── project.md
     ├── risks/
     │   └── r001-scope-creep.md
     ├── actions/
@@ -672,7 +702,7 @@ client-acme/
         └── as001-jdupont-sponsor.md
 ```
 
-`client.yaml`:
+`client.md`:
 
 ```yaml
 ---
@@ -683,7 +713,7 @@ pkf_version: "0.1"
 ---
 ```
 
-`project-test-runs/project.yaml`:
+`project-test-runs/project.md`:
 
 ```yaml
 ---

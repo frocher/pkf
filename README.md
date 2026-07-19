@@ -21,11 +21,11 @@ plain directory tree:
 
 ```
 client-acme/
-├── client.yaml
+├── client.md
 ├── stakeholders/
 │   └── s001-jean-dupont.md
 └── project-test-runs/
-    ├── project.yaml
+    ├── project.md
     ├── risks/
     │   └── r001-scope-creep.md
     ├── actions/
