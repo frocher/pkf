@@ -92,6 +92,12 @@ software.
   other objects, carried by a dedicated frontmatter field and paired
   with a cardinality (§7). Distinct from a plain Markdown link in the
   body, which remains possible but is not resolved by PKF tooling.
+- **Authored relation** — the side of a relation that is written by
+  hand and holds the reference (§7.1).
+- **Inverse relation** — the opposite side of an authored relation,
+  never written by hand: a tool reconstructs it by inverting the
+  authored side (§7.1). Distinct from a *View*, which is a whole
+  representation rather than a single field.
 - **View** — a derived representation, generated from objects and
   their relations (risk register, schedule, Excel table...), never
   hand-maintained.
@@ -252,9 +258,10 @@ to be delivered.
 | Field   | Type / Values                          |
 |---------|-------------------------------------------|
 | `kind`  | Internal, External, SaaS, Legacy          |
-| `owner` | responsible team or person                 |
 
-Relations: `project` (1) · `requirements` → Requirement (0..n) · `dependencies` → Dependency (0..n)
+Relations: `project` (1) · `owner` → Stakeholder (1) ·
+`requirements` → Requirement (0..n) · `dependencies` → Dependency
+(0..n)
 
 ### Assignment
 
@@ -277,7 +284,7 @@ Relations: `project` (1) · `stakeholder` (1)
 The client for whom one or more projects are developed. The root of
 the bundle in a monorepo setup.
 
-Relations: `projects` → Project (0..n)
+Relations: `projects` → Project (0..n, inverse — §7.1)
 
 ### Competency
 
@@ -302,12 +309,12 @@ context, to avoid re-litigating the same topics months later.
 | `alternatives`     | text — options considered                                   |
 | `decision`         | text — the final validated choice                           |
 | `rationale`        | text — the main reasons behind the decision                 |
-| `decision_maker`   | the person or body who approved it                          |
 | `decision_date`    | date                                                          |
 | `impact`           | text — consequences (technical, schedule, budget...)        |
 | `status`           | Proposed, Approved, Implemented, Superseded                 |
 
-Relations: `project` (1) · `actions` → Action (0..n)
+Relations: `project` (1) · `decision_maker` → Stakeholder (1) ·
+`actions` → Action (0..n)
 
 ### Delivery
 
@@ -319,12 +326,12 @@ The delivery of a software, technical, or documentary product.
 | `kind`                    | Release, Patch, Hotfix, Increment, Deployment, Documentation, ...  |
 | `release_date`            | date                                                                  |
 | `status`                  | Planned, In Progress, Ready, Delivered, Validated, Cancelled       |
-| `owner`                   | responsible person or team                                          |
 | `deliverables`            | list — items included in the delivery                               |
 | `acceptance_criteria`     | text                                                                  |
 | `environment`             | Development, Testing, Staging, Production                          |
 
-Relations: `project` (1) · `milestone` → Milestone (0..1)
+Relations: `project` (1) · `owner` → Stakeholder (1) · `milestone` →
+Milestone (0..1)
 
 ### Dependency
 
@@ -337,9 +344,10 @@ resource...).
 | `kind`      | Internal, External, Technical, Functional, Resource    |
 | `status`    | Identified, In Progress, Resolved, Blocking             |
 | `due_date`  | date by which the dependency must be resolved            |
-| `owner`     | responsible for follow-up                                 |
 
-Relations: `milestones` → Milestone (0..n) · `risks` → Risk (0..n) · `related_project` → Project (0..1, cross-project dependency)
+Relations: `project` (1) · `owner` → Stakeholder (1) · `milestones` →
+Milestone (0..n) · `risks` → Risk (0..n) · `related_project` → Project
+(0..1, cross-project dependency)
 
 ### Milestone
 
@@ -351,17 +359,19 @@ an important checkpoint.
 | `category`                 | delivery, validation, technical, business, release, ...  |
 | `due_date`                 | date                                                        |
 | `status`                   | Planned, In Progress, Achieved, Delayed, Cancelled         |
-| `owner`                    | responsible person or team                                  |
 | `acceptance_criteria`      | text                                                          |
 | `impact`                   | consequences of a delay                                     |
 
-Relations: `project` (1) · `deliveries` → Delivery (0..n) · `dependencies` → Dependency (0..n)
+Relations: `project` (1) · `owner` → Stakeholder (1) · `deliveries` →
+Delivery (0..n, inverse — §7.1) · `dependencies` → Dependency (0..n,
+inverse — §7.1)
 
 ### Project
 
 A software project developed for a client.
 
-Relations: `client` (1) · `milestones` → Milestone (0..n) · `deliveries` → Delivery (0..n)
+Relations: `client` (1) · `milestones` → Milestone (0..n, inverse —
+§7.1) · `deliveries` → Delivery (0..n, inverse — §7.1)
 
 ### Requirement
 
@@ -372,9 +382,9 @@ A functional or technical requirement the project must satisfy.
 | `category`  | Functional, Technical, Regulatory, Security, Performance          |
 | `priority`  | Must have, Should have, Could have, Won't have                    |
 | `status`    | Draft, Validated, In Progress, Implemented, Tested, Rejected      |
-| `owner`     | owner of the requirement                                           |
 
-Relations: `project` (1) · `deliveries` → Delivery (0..n) · `applications` → Application (0..n)
+Relations: `project` (1) · `owner` → Stakeholder (1) · `deliveries` →
+Delivery (0..n) · `applications` → Application (0..n, inverse — §7.1)
 
 ### Risk
 
@@ -425,7 +435,8 @@ side.
 | `email`         | —                                                            |
 | `phone`         | —                                                            |
 
-Relations: `team` → Team (0..1) · involved in `0..n` projects via `Assignment` (§8), never as a direct field.
+Relations: `team` → Team (0..1, inverse — §7.1) · involved in `0..n`
+projects via `Assignment` (§8), never as a direct field.
 
 ### Team
 
@@ -448,7 +459,8 @@ An external contractor or supplier involved in one or more projects
 | `kind`      | Software vendor, Service company, Hosting provider, Consultant, Other |
 | `contact`   | main point of contact at the vendor                                |
 
-Relations: `projects` → Project (0..n) · `risks` → Risk (0..n)
+Relations: `projects` → Project (0..n) · `risks` → Risk (0..n, inverse
+— §7.1)
 
 ---
 
@@ -477,6 +489,47 @@ The cardinalities listed in §6 are a modeling recommendation, not a
 low-level constraint of the format: a PKF file remains syntactically
 valid even if a required relation is missing. It is up to business
 validation to flag such an absence.
+
+### 7.1 Authored and inverse relations
+
+Many links in §6 are visible from both ends: a Milestone names its
+`project`, and a Project could equally list its `milestones`. Storing
+both is duplication, and duplication desynchronizes — which contradicts
+the separation of data from views (§1). PKF therefore designates, for
+every such pair, a single **authored** side; the opposite side is its
+**inverse**.
+
+An authored relation is written by whoever edits the object. An inverse
+relation is never hand-written: a tool reconstructs it by indexing the
+bundle by `id` and inverting the authored side. An inverse field
+appearing in a file is not an error — a consumer SHOULD ignore its
+stored value and recompute it, and a validation tool (§11) MAY flag it.
+
+The authored side is the one that carries the more specific knowledge —
+in practice the "child" of the pair, the object that cannot exist
+without its counterpart:
+
+| Authored                    | Inverse                     |
+|-----------------------------|-----------------------------|
+| `Project.client`            | `Client.projects`           |
+| `Milestone.project`         | `Project.milestones`        |
+| `Delivery.project`          | `Project.deliveries`        |
+| `Delivery.milestone`        | `Milestone.deliveries`      |
+| `Dependency.milestones`     | `Milestone.dependencies`    |
+| `Risk.vendors`              | `Vendor.risks`              |
+| `Application.requirements`  | `Requirement.applications`  |
+| `Team.members`              | `Stakeholder.team`          |
+
+This table is exhaustive: every relation pair declared on both sides in
+§6 appears in it. `Team.members` is the exception to the child-side
+rule — a team's composition is naturally authored on the team, where
+the membership is legible at a glance.
+
+Every other relation in §6 is declared on one side only —
+`Decision.actions`, `Dependency.risks`, `Vendor.projects` and
+`Team.projects` among them, as well as the `project` field carried by
+most types. All of them are authored by definition, having no
+counterpart to invert.
 
 ---
 
@@ -574,8 +627,9 @@ A bundle is **conformant** with PKF v0.1 if:
 
 A business validation tool (planned for the Validation phase of the
 PKF roadmap) MAY add stricter rules — cardinalities from §6 satisfied,
-enumeration values within the expected list, relations resolved —
-without these rules being a condition for base format conformance.
+enumeration values within the expected list, relations resolved,
+inverse relations (§7.1) not hand-authored — without these rules being
+a condition for base format conformance.
 
 Consumers MUST NOT reject a bundle because of:
 
