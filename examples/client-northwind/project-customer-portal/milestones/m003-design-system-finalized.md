@@ -3,7 +3,7 @@ id: M003
 type: Milestone
 title: "Design system finalized"
 project: P-PORTAL
-category: business
+category: Business
 due_date: 2026-08-30
 status: In Progress
 owner: S004

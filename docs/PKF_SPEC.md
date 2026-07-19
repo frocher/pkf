@@ -274,6 +274,10 @@ This section normalizes the object types covered by PKF v0.1.
 Cardinalities are noted as `1` (exactly one, required), `0..1`
 (optional, at most one), `0..n` (zero to many), `1..n` (one to many).
 
+For enumeration fields, the listed values are illustrative: additional
+values are permitted unless the field's Type / Values cell is marked
+`(closed)`, in which case the listed values are exhaustive.
+
 ### Action
 
 An important task requiring an owner and a due date, not necessarily
@@ -282,8 +286,8 @@ a line item in the detailed schedule.
 | Field         | Type / Values                                                                                     |
 |---------------|------------------------------------------------------------------------------------------------------|
 | `category`    | Technical, Functional, Infrastructure, Security, Documentation, Testing, Deployment, Project Management |
-| `priority`    | Low, Medium, High, Critical                                                                          |
-| `status`      | To Do, In Progress, Blocked, On Hold, Completed, Cancelled                                           |
+| `priority`    | Low, Medium, High, Critical (closed)                                                                  |
+| `status`      | To Do, In Progress, Blocked, On Hold, Completed, Cancelled (closed)                                   |
 | `progress`    | percentage (0–100)                                                                                    |
 | `due_date`    | date                                                                                                   |
 
@@ -311,10 +315,10 @@ without duplicating their identity. See §8 for the full pattern.
 | Field        | Type / Values                                                |
 |--------------|------------------------------------------------------------------|
 | `role`       | free text (e.g. Sponsor, Technical Contact, Product Owner)       |
-| `side`       | Client, Internal, Vendor                                          |
+| `side`       | Client, Internal, Vendor (closed)                                  |
 | `start_date` | date                                                               |
 | `end_date`   | date, optional                                                     |
-| `status`     | Active, Ended                                                      |
+| `status`     | Active, Ended (closed)                                             |
 
 Relations: `project` (1) · `stakeholder` (1)
 
@@ -331,7 +335,7 @@ A skill held by a Stakeholder, with its proficiency level.
 
 | Field                  | Type / Values                                |
 |-------------------------|-----------------------------------------------|
-| `level`                 | Beginner, Intermediate, Advanced, Expert     |
+| `level`                 | Beginner, Intermediate, Advanced, Expert (closed) |
 | `years_of_experience`   | number                                        |
 | `certified`             | boolean                                       |
 
@@ -350,7 +354,7 @@ context, to avoid re-litigating the same topics months later.
 | `rationale`           | text — the main reasons behind the decision            |
 | `decision_date`       | date                                                   |
 | `impact_description`  | text — consequences (technical, schedule, budget...)   |
-| `status`              | Proposed, Approved, Implemented, Superseded            |
+| `status`              | Proposed, Approved, Implemented, Superseded (closed)   |
 
 Relations: `project` (1) · `decision_maker` → Stakeholder (1) ·
 `actions` → Action (0..n)
@@ -362,12 +366,12 @@ The delivery of a software, technical, or documentary product.
 | Field                  | Type / Values                                                        |
 |--------------------------|---------------------------------------------------------------------|
 | `version`                | version identifier                                                  |
-| `kind`                    | Release, Patch, Hotfix, Increment, Deployment, Documentation, ...  |
+| `kind`                    | Release, Patch, Hotfix, Increment, Deployment, Documentation       |
 | `release_date`            | date                                                                  |
-| `status`                  | Planned, In Progress, Ready, Delivered, Validated, Cancelled       |
+| `status`                  | Planned, In Progress, Ready, Delivered, Validated, Cancelled (closed) |
 | `deliverables`            | list — items included in the delivery                               |
 | `acceptance_criteria`     | text                                                                  |
-| `environment`             | Development, Testing, Staging, Production                          |
+| `environment`             | Development, Testing, Staging, Production (closed)                 |
 
 Relations: `project` (1) · `owner` → Stakeholder (1) · `milestone` →
 Milestone (0..1)
@@ -381,7 +385,7 @@ resource...).
 | Field       | Type / Values                                     |
 |-------------|--------------------------------------------------------|
 | `kind`      | Internal, External, Technical, Functional, Resource    |
-| `status`    | Identified, In Progress, Resolved, Blocking             |
+| `status`    | Identified, In Progress, Resolved, Blocking (closed)    |
 | `due_date`  | date by which the dependency must be resolved            |
 
 Relations: `project` (1) · `owner` → Stakeholder (1) · `milestones` →
@@ -395,9 +399,9 @@ an important checkpoint.
 
 | Field                   | Type / Values                                            |
 |---------------------------|-----------------------------------------------------------|
-| `category`                 | delivery, validation, technical, business, release, ...  |
+| `category`                 | Delivery, Validation, Technical, Business, Release        |
 | `due_date`                 | date                                                        |
-| `status`                   | Planned, In Progress, Achieved, Delayed, Cancelled         |
+| `status`                   | Planned, In Progress, Achieved, Delayed, Cancelled (closed) |
 | `acceptance_criteria`      | text                                                          |
 | `impact_description`       | consequences of a delay                                     |
 
@@ -419,8 +423,8 @@ A functional or technical requirement the project must satisfy.
 | Field       | Type / Values                                                |
 |-------------|-------------------------------------------------------------------|
 | `category`  | Functional, Technical, Regulatory, Security, Performance          |
-| `priority`  | Must have, Should have, Could have, Won't have                    |
-| `status`    | Draft, Validated, In Progress, Implemented, Tested, Rejected      |
+| `priority`  | Must have, Should have, Could have, Won't have (closed)           |
+| `status`    | Draft, Validated, In Progress, Implemented, Tested, Rejected (closed) |
 
 Relations: `project` (1) · `owner` → Stakeholder (1) · `deliveries` →
 Delivery (0..n) · `applications` → Application (0..n, inverse — §7.1)
@@ -432,12 +436,12 @@ A risk identified for a project.
 | Field                  | Type / Values                                                                          |
 |--------------------------|-----------------------------------------------------------------------------------|
 | `category`               | Technical, Functional, Security, Infrastructure, Vendor, Schedule, Budget, Quality, Compliance, Organizational |
-| `probability`            | Low, Medium, High, Very High                                                          |
-| `impact`                 | Low, Medium, High, Critical                                                           |
-| `score`                  | Low, Medium, High, Critical — derived from probability × impact (optional; matrix in Appendix B) |
+| `probability`            | Low, Medium, High, Very High (closed)                                                 |
+| `impact`                 | Low, Medium, High, Critical (closed)                                                  |
+| `score`                  | Low, Medium, High, Critical (closed) — derived from probability × impact (optional; matrix in Appendix B) |
 | `plan`                   | mitigation or contingency plan                                                         |
-| `response_strategy`      | Avoid, Mitigate, Transfer, Accept                                                       |
-| `status`                  | Open, Under Review, Mitigated, Accepted, Closed, Occurred                             |
+| `response_strategy`      | Avoid, Mitigate, Transfer, Accept (closed)                                              |
+| `status`                  | Open, Under Review, Mitigated, Accepted, Closed, Occurred (closed)                    |
 
 Relations: `project` (1) · `owner` → Stakeholder (1) · `vendors` → Vendor (0..n)
 
@@ -456,8 +460,8 @@ A skill need expressed by a project — one row of the skills matrix.
 
 | Field                | Type / Values                                |
 |-----------------------|------------------------------------------------|
-| `required_level`      | Beginner, Intermediate, Advanced, Expert       |
-| `criticality`         | Nice to have, Important, Critical               |
+| `required_level`      | Beginner, Intermediate, Advanced, Expert (closed) |
+| `criticality`         | Nice to have, Important, Critical (closed)      |
 | `headcount_needed`    | number                                           |
 
 Relations: `project` (1) · `skill` (1)
@@ -696,11 +700,12 @@ not only as `index.md` (§4.4).
 
 A business validation tool (planned for the Validation phase of the
 PKF roadmap) MAY add stricter rules — cardinalities from §6 satisfied,
-enumeration values within the expected list, relations resolved,
-inverse relations (§7.1) not hand-authored, derived fields such as
-`Risk.score` matching their computation (Appendix B) rather than a
-stale hand-authored value — without these rules being a condition for
-base format conformance.
+enumeration values within the expected list for fields marked
+`(closed)` in §6 (§6's own convention governs unmarked fields, at any
+validation strictness level), relations resolved, inverse relations
+(§7.1) not hand-authored, derived fields such as `Risk.score` matching
+their computation (Appendix B) rather than a stale hand-authored value
+— without these rules being a condition for base format conformance.
 
 Consumers MUST NOT reject a bundle because of:
 

@@ -3,7 +3,7 @@ id: M002
 type: Milestone
 title: "Checkout API go-live"
 project: P-PLATFORM
-category: delivery
+category: Delivery
 due_date: 2026-10-01
 status: Planned
 owner: S002

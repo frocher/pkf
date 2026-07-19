@@ -3,7 +3,7 @@ id: M001
 type: Milestone
 title: "Legacy system freeze"
 project: P-PLATFORM
-category: technical
+category: Technical
 due_date: 2026-08-15
 status: Planned
 owner: S002

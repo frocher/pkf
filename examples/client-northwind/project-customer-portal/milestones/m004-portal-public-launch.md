@@ -3,7 +3,7 @@ id: M004
 type: Milestone
 title: "Portal public launch"
 project: P-PORTAL
-category: release
+category: Release
 due_date: 2026-11-15
 status: Planned
 owner: S004
