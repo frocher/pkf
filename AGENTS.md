@@ -57,3 +57,17 @@ each file). If a change is substantive:
   changelog. Don't reintroduce one.
 - Keep examples minimal and internally consistent (IDs referenced in
   relations must actually appear in the example).
+
+## Agent skills
+
+### Issue tracker
+
+Issues live in GitHub Issues (frocher/pkf), via the gh CLI; external PRs are not a triage surface. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Default label vocabulary (needs-triage, needs-info, ready-for-agent, ready-for-human, wontfix). See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: CONTEXT.md + docs/adr/ at the repo root. See `docs/agents/domain.md`.
