@@ -39,7 +39,16 @@ Work here is writing and editing specification prose, not code.
 ## Versioning
 
 Both specs are versioned drafts (`Version 0.1 — Draft` at the top of
-each file). If a change is substantive:
+each file).
+
+**While the major version is 0, do not bump the banner.** A pre-1.0
+draft settles in place: breaking changes land without a version bump,
+and numbering them would imply a stability the drafts do not have. PKF
+§12 states this rule for consumers; this is the editing side of it. If
+you are about to bump a `0.x` banner, don't — say so in the commit
+message instead, so the choice is reviewable.
+
+From 1.0 onward, if a change is substantive:
 
 - A change that adds optional fields or types without breaking
   compatibility is a **minor** bump.
