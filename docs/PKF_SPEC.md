@@ -118,6 +118,12 @@ client-acme/
 │   └── s002-new-developer.md
 ├── vendors/
 │   └── v001-hosting-provider-x.md
+├── teams/
+│   └── t001-backend-team.md
+├── skills/
+│   └── sk001-kubernetes.md
+├── competencies/
+│   └── comp001-jdupont-kubernetes.md
 ├── project-migration-api/
 │   ├── project.md
 │   ├── milestones/
@@ -128,6 +134,7 @@ client-acme/
 │   ├── requirements/
 │   ├── applications/
 │   ├── dependencies/
+│   ├── skill-requirements/
 │   └── team/
 │       └── as001-jdupont-sponsor.md
 └── project-test-runs/
@@ -146,12 +153,19 @@ the repository, with no cross-repo sync plumbing. A query like "Jean's
 total workload across all of the client's projects" becomes a simple
 file traversal.
 
+Client-scoped catalogs — Stakeholder, Vendor, Team, Skill, Competency —
+live at the bundle root, under the client, and are shared across all of
+that client's projects. Every other §6 object type that attaches to a
+project is project-scoped, living under that project's `project-*/`
+subfolder.
+
 ### 4.2 Multi-repo alternative
 
 If strict isolation is required: one repository per project, with the
-shared base (`client.md`, `stakeholders/`, `vendors/`) in a separate
-repository referenced as a Git submodule. This solves permissions, at
-the cost of an aggregation script for any cross-project question.
+shared base (`client.md`, `stakeholders/`, `vendors/`, `teams/`,
+`skills/`, `competencies/`) in a separate repository referenced as a
+Git submodule. This solves permissions, at the cost of an aggregation
+script for any cross-project question.
 
 ### 4.3 File naming
 
