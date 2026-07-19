@@ -180,8 +180,11 @@ a consumer to parse the whole file as YAML — which §5.1 forbids, for
 reasons that apply to reserved files exactly as they do to any other
 object.
 
-`index.md` is the exception: it carries no frontmatter and is not an
-object (§9).
+`index.md` carries no frontmatter and is not an object (§9). It is one
+example of a narrative `.md` file with defined conventions — a bundle
+MAY also hold other narrative documents (a `README.md`, steering
+committee notes, meeting minutes) anywhere in the tree; like
+`index.md`, they carry no frontmatter and are not objects (§11).
 
 ---
 
@@ -639,13 +642,19 @@ relations resolved if the field follows the §7 convention).
 
 A bundle is **conformant** with PKF v0.1 if:
 
-1. Every non-reserved `.md` file contains a parseable YAML frontmatter
-   block.
-2. Every frontmatter block contains a non-empty `id` field, unique
-   within the bundle.
-3. Every frontmatter block contains a non-empty `type` field.
+1. Every `.md` file that contains a frontmatter block parses that
+   block as valid YAML.
+2. Every such frontmatter block contains a non-empty `id` field,
+   unique within the bundle.
+3. Every such frontmatter block contains a non-empty `type` field.
 4. The reserved files (`client.md`, `project.md`, `index.md`)
    follow the structure described in §4.4 and §9 when present.
+
+A `.md` file with no frontmatter block at all — a narrative document
+such as a `README.md`, meeting notes, or steering-committee minutes —
+is not an object: it carries no `id` or `type`, is not subject to
+clauses 1-3, and is not indexed. It MAY appear anywhere in the tree,
+not only as `index.md` (§4.4).
 
 A business validation tool (planned for the Validation phase of the
 PKF roadmap) MAY add stricter rules — cardinalities from §6 satisfied,
@@ -660,7 +669,8 @@ Consumers MUST NOT reject a bundle because of:
 - missing optional frontmatter fields;
 - unknown types (§10);
 - relations whose target does not yet exist (§7);
-- a missing `index.md`.
+- a missing `index.md`;
+- a `.md` file with no frontmatter block.
 
 ---
 
