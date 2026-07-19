@@ -3,11 +3,11 @@
 §3 defined `id` by example only (`R001`, `A014`, `AS007`), the
 reference bundle mixes those numeric-prefix ids with a slug id for
 `Project` (`P-PLATFORM`), and nothing said whether relation
-resolution is case-sensitive. Separately, §11.2 requires bundle-wide
-uniqueness but nothing governs allocation, so two branches in the
-monorepo+PR workflow §4.1 recommends can independently pick the same
-next id — a collision Git won't flag, since the two files have
-different names (#10).
+resolution is case-sensitive. Separately, §11 (clause 2) requires
+bundle-wide uniqueness but nothing governs allocation, so two
+branches in the monorepo+PR workflow §4.1 recommends can
+independently pick the same next id — a collision Git won't flag,
+since the two files have different names (#10).
 
 **Grammar.** The default form is `[A-Z]+[0-9]+` — one or more
 uppercase letters, one or more digits, no fixed width. Prefix letters
@@ -25,7 +25,7 @@ convention: §4.3 already treats the filename as indicative, with the
 frontmatter `id` remaining canonical.
 
 **Allocation.** Concurrent-allocation collisions are closed by
-process, not by changing the grammar above. §11.2's uniqueness
+process, not by changing the grammar above. §11's clause 2 uniqueness
 requirement is unchanged. What's new: bundles using the §4.1
 monorepo+PR workflow SHOULD run a conformant validator as a required
 PR check, with the PR's base kept up to date before merge is allowed

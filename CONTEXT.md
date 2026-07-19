@@ -10,10 +10,9 @@ themselves define.
 
 **ID**:
 A short, stable identifier for an object, unique within the bundle
-and independent of its location in the tree. Grammar is
-type-conditional: `[A-Z]+[0-9]+` (e.g. `R001`) by default,
-`P-[A-Z0-9-]+` reserved to Project (e.g. `P-PLATFORM`); always
-uppercase, resolved by exact case-sensitive match. See
+and independent of its location in the tree. Its grammar is
+type-conditional — a numeric-prefix default, with a narrow slug
+exception for Project — and always case-sensitive. See
 [ADR-0002](docs/adr/0002-id-grammar-and-allocation.md).
 _Avoid_: Slug, key, code — this is the canonical identity, not the
 filename's descriptive slug (§4.3).

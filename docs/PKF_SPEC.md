@@ -183,7 +183,7 @@ that client's projects. Every other §6 object type that attaches to a
 project is project-scoped, living under that project's `project-*/`
 subfolder.
 
-Because ids must be unique within the bundle (§11.2) but nothing
+Because ids must be unique within the bundle (§11, clause 2) but nothing
 elsewhere reserves ranges or coordinates allocation, two branches can
 independently pick the same next id (e.g. both choosing `R004`), and
 neither branch's own CI will see the collision — each validates
@@ -257,8 +257,9 @@ project: <project ID>       # required for any object attached to a project
 
 **Required fields:**
 
-- `id` — a unique identifier within the bundle. Stable over time: it
-  does not change if the file is moved or renamed.
+- `id` — a unique identifier within the bundle, in the grammar
+  defined by §3.1. Stable over time: it does not change if the file
+  is moved or renamed.
 - `type` — one of the normalized types in §6, or an extension type
   (§10). PKF tools MUST tolerate an unknown type (treating it as a
   generic object) rather than rejecting the file.
