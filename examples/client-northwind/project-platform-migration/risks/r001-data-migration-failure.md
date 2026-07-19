@@ -2,6 +2,7 @@
 id: R001
 type: Risk
 title: "Data migration failure"
+description: "A migration script error could corrupt customer order data during the cutover."
 project: P-PLATFORM
 category: Technical
 probability: Medium

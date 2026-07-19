@@ -2,6 +2,7 @@
 id: A002
 type: Action
 title: "Provision staging cluster"
+description: "Stand up the staging cluster used to validate the migration before cutover."
 project: P-PLATFORM
 owner: S002
 category: Infrastructure

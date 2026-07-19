@@ -248,6 +248,7 @@ committee notes, meeting minutes) anywhere in the tree; like
 id: <unique ID>            # REQUIRED
 type: <Type>                # REQUIRED — see §6
 title: <Short name>         # RECOMMENDED
+description: <One sentence> # RECOMMENDED
 status: <Status>            # depends on type, see §6
 owner: <ID of an object>    # depends on type
 project: <project ID>       # required for any object attached to a project
@@ -268,6 +269,11 @@ project: <project ID>       # required for any object attached to a project
 
 - `title` — a human-readable display name. If omitted, a tool may
   derive a title from the file name.
+- `description` — a one-sentence, human-readable summary of the
+  object. Used as the source for index entry text (§9), search
+  snippets, and previews. Distinct from the body's `# Description`
+  heading (§5.2), which carries long-form detail rather than a
+  one-line summary.
 
 **Extensions:** any additional field is allowed. PKF tools MUST
 preserve unknown fields and MUST NOT reject a document for that reason
@@ -692,17 +698,21 @@ each `stakeholder` to its global object.
 
 An `index.md` MAY appear in any directory to list its contents and
 support progressive disclosure before opening each object
-individually:
+individually. Each entry gives the object's ID, title, and — when
+present — its `description` (§5.1):
 
 ```markdown
 # Risks
 
-* [R001 — Scope creep](r001-scope-creep.md) — Open, High
-* [R003 — Data migration failure](r003-data-migration-failure.md) — Under Review, Critical
+* [R001 — Scope creep](r001-scope-creep.md) — New requirements could be added without validation, leading to delays and cost overruns.
+* [R003 — Data migration failure](r003-data-migration-failure.md)
 ```
 
 This file is indicative: a tool MAY generate it on the fly rather than
-maintain it by hand. For change history, see §5.3 — PKF defers
+maintain it by hand, uniformly across object types, using only `id`,
+`title`, and `description` — no type-specific fields are needed. An
+object without a `description` produces an entry with no trailing
+text, as R003 does above. For change history, see §5.3 — PKF defers
 entirely to Git rather than defining a logging mechanism within the
 format.
 

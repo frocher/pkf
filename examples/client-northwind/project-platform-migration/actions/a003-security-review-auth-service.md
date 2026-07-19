@@ -2,6 +2,7 @@
 id: A003
 type: Action
 title: "Security review of new auth service"
+description: "Review the new auth service for security issues before go-live."
 project: P-PLATFORM
 owner: S003
 category: Security

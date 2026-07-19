@@ -2,6 +2,7 @@
 id: R002
 type: Risk
 title: "Key engineer attrition"
+description: "Migration architecture knowledge sits with a single engineer, risking major delays if they leave."
 project: P-PLATFORM
 category: Organizational
 probability: Low

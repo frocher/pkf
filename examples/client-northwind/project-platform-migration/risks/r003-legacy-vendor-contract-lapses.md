@@ -2,6 +2,7 @@
 id: R003
 type: Risk
 title: "Legacy vendor contract lapses"
+description: "The legacy monolith's hosting contract expires before the planned decommission date."
 project: P-PLATFORM
 category: Vendor
 probability: Low
