@@ -1,0 +1,170 @@
+{
+  "skill_name": "pkf",
+  "fixture": "examples/client-northwind/",
+  "notes": "Single seam per the ticket's Testing Decisions: given (bundle, natural-language request), assert on (workflow routed, action proposed) — never on a workflow file's internal prose. Every eval runs against the northwind bundle (client C001, projects P-PLATFORM and P-PORTAL) so scope resolution (mono-project vs portfolio) is exercised for real.",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "On the Platform Migration project, what actions are in progress, blocked, or overdue right now?",
+      "expected_output": "Routes to workflows/action-tracking.md, scoped to P-PLATFORM. Buckets A001 (In Progress), A003 (To Do, due 2026-08-20) correctly and does not list A002 (Completed).",
+      "expectations": [
+        "Routes to action-tracking, not risk-review or consistency-check",
+        "Resolves project scope to P-PLATFORM without asking, since it was named",
+        "Excludes Completed/Cancelled actions from the buckets",
+        "Does not write to any file"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Is Checkout API go-live (M002) ready? Walk me through what's still open.",
+      "expected_output": "Routes to workflows/milestone-delivery-prep.md, targets M002, reads acceptance_criteria, and pulls in D001 (Checkout API v1, status Planned, acceptance_criteria 'Passes load test at 3x expected peak traffic') via its authored `milestone: M002` relation as the open gap.",
+      "expectations": [
+        "Routes to milestone-delivery-prep, not milestone-delivery-signoff (that workflow is director-scoped)",
+        "Identifies M002 from the id given without asking to disambiguate",
+        "Surfaces D001 as the attached Delivery via the authored Delivery.milestone relation, not by reading every file",
+        "Reports D001 as still Planned (not yet Ready/Delivered) as the gap against M002's due date"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Quick note for the Portal project: the CDN vendor might hike prices sharply at next renewal, we should track that as a risk.",
+      "expected_output": "Routes to workflows/dictated-capture.md, drafts a Risk object (category Vendor, project P-PORTAL, next unused R-id) and presents the full proposed file for validation.",
+      "expectations": [
+        "Classifies the dictated content as a Risk, not an Action or Decision",
+        "Proposes a complete frontmatter draft (id, type, title, project, category) rather than a vague summary",
+        "Does not write any file — stops at presenting the proposal and waiting for confirmation",
+        "Does not invent an owner, since none was named"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Here's the write-up from yesterday's steering committee for Platform Migration, file it: 'We agreed to delay the legacy freeze by two weeks. Priya needs to finish the staging cluster hardening by next Friday. There's a real risk the vendor contract lapse (R003) isn't resolved before decommission.'",
+      "expected_output": "Routes to workflows/meeting-notes-ingest.md. First proposes archiving the note verbatim as a frontmatter-less file; separately proposes extracted candidates (an Action for the hardening task, a note tying back to existing R003) for independent validation.",
+      "expectations": [
+        "Two distinct proposals: archive the raw note, then the extracted candidates — not merged into one write",
+        "The archived note has no YAML frontmatter",
+        "Does not create a duplicate Risk for R003, which already exists — recognizes it as a reference to the existing object",
+        "Does not write anything before validation"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Run a sanity check on the Platform Migration bundle — anything inconsistent?",
+      "expected_output": "Routes to workflows/consistency-check.md, scoped to P-PLATFORM. Runs the four checks (missing owners, orphans, inconsistent statuses, overdue-not-reflected) over that project's objects only.",
+      "expectations": [
+        "Routes to consistency-check, not risk-review",
+        "Scopes to P-PLATFORM only, not the whole bundle, since consistency-check is project-manager-scoped",
+        "Groups findings by check type with the specific object id and reason"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "What decisions are waiting on me across the portfolio?",
+      "expected_output": "Routes to workflows/decision-arbitration.md, scoped to every project. Reports that DEC001, DEC002, and DEC003 are all already Approved, so nothing is currently at status Proposed.",
+      "expectations": [
+        "Defaults scope to the whole client (all projects), since decision-arbitration is director-scoped, without asking",
+        "Correctly reports zero Decisions at status: Proposed rather than fabricating one",
+        "Does not propose a write, since there is nothing to arbitrate"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Go/no-go across the portfolio on anything due soon or already delayed.",
+      "expected_output": "Routes to workflows/milestone-delivery-signoff.md, scope = all projects. Surfaces M001 and M002 (both Planned, P-PLATFORM) and the portal milestones, at the acceptance-criteria level.",
+      "expectations": [
+        "Routes to milestone-delivery-signoff, not milestone-delivery-prep",
+        "Scope defaults to the whole portfolio without asking",
+        "Judges readiness from acceptance_criteria plus linked Delivery/Dependency status, not a task-level audit"
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "Give me the portfolio picture — where are we stuck?",
+      "expected_output": "Routes to workflows/portfolio-dashboard.md. Produces a per-project snapshot (risk counts by score, overdue/blocked actions, milestone health, decision backlog) for both P-PLATFORM and P-PORTAL, and offers to drill in on request.",
+      "expectations": [
+        "Routes to portfolio-dashboard, not status-reporting, since the phrasing asks to navigate rather than produce a document",
+        "Covers both projects in one snapshot",
+        "Stays read-only — no proposed write, and redirects any requested action to the specific workflow that owns it"
+      ]
+    },
+    {
+      "id": 9,
+      "prompt": "Are we short on any critical skills anywhere, and is anyone overloaded across projects?",
+      "expected_output": "Routes to workflows/resource-skill-monitoring.md, scope = whole client. Flags SR003 (React, criticality Critical) as uncovered if no Advanced-level React Competency is held by an actively-assigned stakeholder, and reports Assignment load per stakeholder/team.",
+      "expectations": [
+        "Routes to resource-skill-monitoring, not portfolio-dashboard",
+        "Checks SkillRequirement coverage via Competency + Active Assignment, not just Skill existence in the catalog",
+        "Reports load in aggregate (per stakeholder/team counts), not a per-person narrative"
+      ]
+    },
+    {
+      "id": 10,
+      "prompt": "Write a status report on the portfolio for the steering committee.",
+      "expected_output": "Routes to workflows/status-reporting.md with scope resolved to portfolio directly from the request (no need to ask, since 'portfolio' was stated). Drafts a roll-up with one section per project plus an executive summary.",
+      "expectations": [
+        "Scope is taken from the request text, not defaulted or asked about",
+        "States the resolved scope back to the user before drafting",
+        "Produces a roll-up structure (per-project sections + executive summary), not a single-project report"
+      ]
+    },
+    {
+      "id": 11,
+      "prompt": "Write a status report.",
+      "expected_output": "Routes to workflows/status-reporting.md. Since the bundle has two projects and scope wasn't stated, proposes the choice (which project, or the portfolio) instead of silently picking one.",
+      "expectations": [
+        "Does not default silently to either project or portfolio scope",
+        "Explicitly proposes the scope choice to the user before drafting anything",
+        "Correctly identifies that the bundle has more than one project as the reason a default can't be inferred"
+      ]
+    },
+    {
+      "id": 12,
+      "prompt": "Review the Critical and High risks on the Customer Portal project only.",
+      "expected_output": "Routes to workflows/risk-review.md with scope resolved to P-PORTAL and severity resolved to Critical/High, both taken directly from the request. Lists only P-PORTAL risks at High or Critical score (R004 and R005 are Medium in the fixture, so the filtered list may come back empty — that is a correct result, not an error).",
+      "expectations": [
+        "Both scope and severity are extracted from the request text, independently, in one pass",
+        "Scope is P-PORTAL only, not the whole portfolio",
+        "Severity filter is applied strictly — Medium-score risks like R004/R005 are excluded, and an empty result is reported as such rather than silently widening the filter"
+      ]
+    },
+    {
+      "id": 13,
+      "prompt": "Review the risks.",
+      "expected_output": "Routes to workflows/risk-review.md. Severity defaults to 'all' (no signal implying otherwise). Scope is ambiguous since the bundle has two projects, so the workflow proposes the scope choice before listing anything.",
+      "expectations": [
+        "Severity resolves to 'all' without being asked, since nothing in the request implies a threshold",
+        "Scope is proposed to the user rather than defaulted, given the multi-project bundle",
+        "The two parameters are resolved independently — severity doesn't wait on scope, or vice versa"
+      ]
+    },
+    {
+      "id": 14,
+      "prompt": "Give me a picture of the project.",
+      "expected_output": "Ambiguous between status-reporting and portfolio-dashboard. Presents both candidates by name and asks which one, rather than guessing.",
+      "expectations": [
+        "Does not silently pick one workflow",
+        "Names both candidate workflows explicitly (status reporting vs. the interactive dashboard) so the user can choose",
+        "Does not read or write any bundle file before the user disambiguates"
+      ]
+    },
+    {
+      "id": 15,
+      "prompt": "What can you do with this bundle?",
+      "expected_output": "Bare invocation. Presents the full catalogue grouped by altitude (operational / oversight / cross-cutting) rather than asking the user to declare a role first.",
+      "expectations": [
+        "Lists all 11 workflows, grouped by altitude",
+        "Never asks 'are you the project manager or the program director?' as a precondition",
+        "Does not route to any single workflow without further input"
+      ]
+    },
+    {
+      "id": 16,
+      "prompt": "As both the tech lead on Platform Migration and the program director for Northwind, I want to see what's blocked. Just route on what I'm asking, not on which hat I'm wearing.",
+      "expected_output": "Routes purely on the intent ('what's blocked') to action-tracking (if a single project is meant) or portfolio-dashboard (if portfolio-wide) based on the rest of the phrasing — never asks the user to declare which role they're acting as.",
+      "expectations": [
+        "Does not ask the user to pick a role before routing",
+        "Bases the routing decision on the request's scope/intent signal, not on an assumed persona"
+      ]
+    }
+  ]
+}

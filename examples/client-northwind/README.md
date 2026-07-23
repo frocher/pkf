@@ -1,7 +1,7 @@
 # Northwind — example PKF bundle
 
 This is a fictional bundle used to exercise the
-[PKF specification](../../docs/PKF_SPEC.md) end to end. Northwind, its
+[PKF specification](../../skills/pkf/specs/PKF_SPEC.md) end to end. Northwind, its
 projects, and everyone in it are invented for this example — it is not
 a real client.
 

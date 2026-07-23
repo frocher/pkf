@@ -55,12 +55,15 @@ impact assessment, leading to delays and cost overruns.
 
 ## Documentation
 
-- [`docs/PKF_SPEC.md`](docs/PKF_SPEC.md) — the Project Knowledge Format
-  specification: object types, bundle structure, relations, and
-  conformance rules.
-- [`docs/OKF_SPEC.md`](docs/OKF_SPEC.md) — the Open Knowledge Format
-  specification, a related, more general format for representing
-  knowledge around data and systems.
+- [`skills/pkf/specs/PKF_SPEC.md`](skills/pkf/specs/PKF_SPEC.md) — the
+  Project Knowledge Format specification: object types, bundle
+  structure, relations, and conformance rules.
+- [`skills/pkf/specs/OKF_SPEC.md`](skills/pkf/specs/OKF_SPEC.md) — the
+  Open Knowledge Format specification, a related, more general format
+  for representing knowledge around data and systems.
+- [`skills/pkf/`](skills/pkf/) — a Claude Code skill that turns the PKF
+  spec into role-based workflows (project manager / program director)
+  over a bundle, without requiring the spec to be memorized.
 - [`examples/client-northwind/`](examples/client-northwind/) — a full
   example bundle exercising every object type in the PKF spec,
   including cross-project relations and intentional edge cases.

@@ -5,17 +5,25 @@ Guidance for AI coding agents working in this repository.
 ## What this repository is
 
 This repo is the home of two open specifications, published as Markdown
-documents — there is no application code, build system, or test suite:
+documents, and a Claude Code skill that operates on them — there is no
+application code, build system, or test suite:
 
-- `docs/PKF_SPEC.md` — Project Knowledge Format: a spec for representing
-  a project's risks, actions, decisions, milestones, deliveries, and
-  stakeholders as a graph of structured Markdown+YAML objects.
-- `docs/OKF_SPEC.md` — Open Knowledge Format: a related, more general
-  spec for representing knowledge around data and systems.
+- `skills/pkf/specs/PKF_SPEC.md` — Project Knowledge Format: a spec for
+  representing a project's risks, actions, decisions, milestones,
+  deliveries, and stakeholders as a graph of structured Markdown+YAML
+  objects.
+- `skills/pkf/specs/OKF_SPEC.md` — Open Knowledge Format: a related,
+  more general spec for representing knowledge around data and
+  systems.
+- `skills/pkf/` — a Claude Code skill offering role-based workflows
+  (project manager / program director) over a PKF bundle; see
+  `skills/pkf/SKILL.md`. The specs live under `skills/pkf/specs/` so
+  the skill is self-contained.
 - `README.md` — entry point and overview.
 - `LICENSE.md` — Apache License 2.0.
 
-Work here is writing and editing specification prose, not code.
+Work here is writing and editing specification prose, and skill
+workflow prose, not application code.
 
 ## Editing the specs
 
