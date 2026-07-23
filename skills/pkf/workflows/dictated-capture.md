@@ -14,9 +14,11 @@ Objects: Risk, Action, Decision. See SKILL.md's object map.
    ask rather than guess.
 2. **Resolve project scope**, same rule as action-tracking.
 3. **Draft the object:**
-   - `id` — next unused id in that project for the type's existing
-     prefix convention (e.g. next `R0xx` alongside the project's other
-     Risks).
+   - `id` — unique within the whole bundle, not just the current
+     project (ids are bundle-wide per §3.1). Scan every project for
+     the type's existing prefix (e.g. every `R0xx`, across all
+     `risks/` folders, not just this project's) and take the next
+     unused number.
    - `type`, `title`, `description`, `project`.
    - `owner` — resolved to a Stakeholder id if a name was given;
      otherwise leave unset and say so.
