@@ -27,6 +27,11 @@ a real client.
 - `index.md` files in `project-platform-migration/risks/` and
   `project-platform-migration/actions/`, as an example of the
   optional §9 convention.
+- `DESIGN.md` at the bundle root, a worked example of the
+  status-reporting workflow's design-preferences convention (see
+  `skills/pkf/workflows/status-reporting.md`). This is a skill-level
+  convention, not part of the PKF spec itself — it carries no `id` or
+  `type` and isn't a §6 object.
 
 ## Structure
 
