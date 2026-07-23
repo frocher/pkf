@@ -1,9 +1,9 @@
 ---
 name: pkf
-description: Route a project manager's or program director's natural-language request against a PKF bundle (client.md, project.md, risks/, actions/, decisions/, milestones/, deliveries/...) to the right workflow — action tracking, milestone/delivery prep, dictated capture, meeting-notes ingestion, consistency checks, decision arbitration, milestone/delivery sign-off, portfolio dashboard, resource/skill monitoring, status reporting, risk review. Use when the user wants to check status, update objects, prepare a review, or produce a report on a PKF bundle, rather than hand-editing files.
+description: Route a project manager's or program director's natural-language request against a PKF bundle (client.md, project.md, risks/, actions/, decisions/, milestones/, deliveries/...) to the right workflow — referential bootstrap, project bootstrap, action tracking, milestone/delivery prep, dictated capture, meeting-notes ingestion, consistency checks, decision arbitration, milestone/delivery sign-off, portfolio dashboard, resource/skill monitoring, status reporting, risk review. Use when the user wants to check status, update objects, prepare a review, produce a report, or stand up a new client/project, rather than hand-editing files.
 ---
 
-Routes a request against a PKF bundle to one of 11 workflows, without
+Routes a request against a PKF bundle to one of 13 workflows, without
 ever requiring the user to name a role or memorize the spec.
 
 ## Principle: propose, never write
@@ -38,13 +38,20 @@ bundle, and nothing in an invocation identifies who is asking.
 
 ### Catalogue
 
+**Setup — standing up a new client or project, scope = the client or one project**
+
+| Workflow | File | Ask for it with |
+|---|---|---|
+| Referential bootstrap | `workflows/referential-bootstrap.md` | "onboard a new client", "set up the referential for X" — only when the client has no `client.md` yet |
+| Project bootstrap | `workflows/project-bootstrap.md` | "start a new project for X", "set up P-XXX" — only when the client exists but this project doesn't |
+
 **Operational — project manager, scope = one project**
 
 | Workflow | File | Ask for it with |
 |---|---|---|
 | Action tracking | `workflows/action-tracking.md` | "what's in progress / blocked / overdue", "chase down owners" |
 | Milestone / delivery prep | `workflows/milestone-delivery-prep.md` | "get M004 ready", "check we're ready for the launch milestone" |
-| Dictated capture | `workflows/dictated-capture.md` | "log a risk/action/decision I just thought of", capturing something on the fly |
+| Dictated capture | `workflows/dictated-capture.md` | "log a risk/action/decision I just thought of", "add a new stakeholder/vendor to the team", "assign Marcus to the new project" — any addition to a bundle whose referential already exists |
 | Meeting-notes ingestion | `workflows/meeting-notes-ingest.md` | "file these meeting notes", "pull the actions out of this CR" |
 | Consistency check | `workflows/consistency-check.md` | "sanity-check the bundle", "find missing owners / orphaned objects" |
 
