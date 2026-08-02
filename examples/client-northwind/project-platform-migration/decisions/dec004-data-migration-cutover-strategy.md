@@ -8,5 +8,5 @@ context: "The migration runbook (D002) is nearing completion, but no cutover str
 alternatives: "Big-bang cutover in a single maintenance window, simplest to execute but highest downtime risk if validation fails; phased dual-write with legacy and new systems running in parallel during a validation period, lower risk but weeks of added reconciliation work."
 decision: "Phased dual-write cutover, pending sign-off."
 decision_maker: S002
-status: Proposed
+decision_status: Proposed
 ---

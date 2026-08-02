@@ -40,3 +40,12 @@ Attaches a Stakeholder to a project with a role and side specific to
 that project, so the same person can hold different roles across
 projects without duplicating their identity.
 _Avoid_: Role, membership.
+
+**`<type>_status`** (frontmatter field, e.g. `risk_status`,
+`decision_status`):
+The per-type, closed business-status enum PKF objects carry (§6). Named
+with the type as a prefix, never bare `status`, to stay unambiguous
+next to OKF's own `status` field, which is a generic lifecycle value
+(`draft`/`stable`/`deprecated`) with no relation to PKF's meaning. See
+[ADR-0004](docs/adr/0004-per-type-status-field-names.md).
+_Avoid_: `status` alone in PKF object frontmatter.

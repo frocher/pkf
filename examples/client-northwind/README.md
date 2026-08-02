@@ -33,8 +33,9 @@ a real client.
   convention, not part of the PKF spec itself — it carries no `id` or
   `type` and isn't a §6 object.
 - A handful of objects exist purely to give four read-heavy workflows
-  a non-empty case to demonstrate: `DEC004` (`status: Proposed`, for
-  `decision-arbitration`), `R006` (`review_date` already passed and
+  a non-empty case to demonstrate: `DEC004` (`decision_status:
+  Proposed`, for `decision-arbitration`), `R006` (`review_date`
+  already passed and
   `score: Critical` while `Open`, for `risk-review` and
   `portfolio-dashboard`'s at-risk flag), and `A006`/`A007` (one
   overdue, one `Blocked`, for `action-tracking`).

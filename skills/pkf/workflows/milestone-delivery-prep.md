@@ -20,12 +20,12 @@ Objects: Milestone, Delivery, Dependency. See SKILL.md's object map.
      it).
    - For a Delivery: its `deliverables` and the Milestone it belongs
      to, if any.
-4. **Check each attached item's status** — a Dependency still
-   `Identified` or `Blocking`, a Delivery not yet `Ready`, is a gap
-   against the target's date.
+4. **Check each attached item's status** (`dependency_status`,
+   `delivery_status`) — a Dependency still `Identified` or `Blocking`,
+   a Delivery not yet `Ready`, is a gap against the target's date.
 5. **Summarize readiness**: which acceptance criteria look satisfied
    from the bundle's current state, which are open, and which
    dependencies or deliveries are the blockers.
-6. **If the user wants to close a gap** (update a Dependency's status,
-   mark a Delivery `Ready`), propose the exact frontmatter change for
-   validation before writing.
+6. **If the user wants to close a gap** (update a Dependency's
+   `dependency_status`, mark a Delivery `delivery_status: Ready`),
+   propose the exact frontmatter change for validation before writing.

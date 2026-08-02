@@ -6,5 +6,5 @@ stakeholder: S001
 role: Sponsor
 side: Client
 start_date: 2026-05-01
-status: Active
+assignment_status: Active
 ---

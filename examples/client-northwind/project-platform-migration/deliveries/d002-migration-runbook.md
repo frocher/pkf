@@ -5,7 +5,7 @@ title: "Migration runbook"
 project: P-PLATFORM
 kind: Documentation
 release_date: 2026-09-15
-status: In Progress
+delivery_status: In Progress
 owner: S003
 deliverables:
   - Cutover runbook

@@ -10,7 +10,7 @@ impact: High
 score: Medium
 owner: S002
 response_strategy: Mitigate
-status: Open
+risk_status: Open
 plan: "Pair Marcus with a second engineer on all critical migration components to avoid a single point of knowledge failure."
 ---
 

@@ -7,7 +7,7 @@ project: P-PLATFORM
 owner: S003
 category: Testing
 priority: Medium
-status: Blocked
+action_status: Blocked
 progress: 0
 due_date: 2026-08-10
 ---

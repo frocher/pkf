@@ -11,7 +11,7 @@ score: Medium
 owner: S002
 vendors: [V001]
 response_strategy: Accept
-status: Under Review
+risk_status: Under Review
 plan: "Confirm renewal terms with CloudScale Hosting before the legacy environment is due to be decommissioned."
 ---
 

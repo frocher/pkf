@@ -13,11 +13,11 @@ object map.
 1. **Scope is always the whole client** — every `project-*/` folder in
    the bundle. No parameter to resolve.
 2. **Build a per-project snapshot:**
-   - Risk counts by `score`, `status: Open` or `Under Review` only.
+   - Risk counts by `score`, `risk_status: Open` or `Under Review` only.
    - Action counts overdue / blocked.
    - Milestone health: any `Delayed`, any upcoming within the near
      term.
-   - Decision backlog: count at `status: Proposed`, and how long the
+   - Decision backlog: count at `decision_status: Proposed`, and how long the
      oldest has waited (`decision_date` absent, so use context/git
      history if asked).
 3. **Present the snapshot as a compact table**, one row per project.

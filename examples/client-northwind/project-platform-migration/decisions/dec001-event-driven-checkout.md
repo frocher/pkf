@@ -10,6 +10,6 @@ rationale: "Decouples the failure domains of billing, inventory, and shipping, a
 decision_maker: S002
 decision_date: 2026-06-20
 impact_description: "Requires the team to build event bus operational expertise; adds roughly two weeks to the Checkout API timeline."
-status: Approved
+decision_status: Approved
 actions: [A003]
 ---

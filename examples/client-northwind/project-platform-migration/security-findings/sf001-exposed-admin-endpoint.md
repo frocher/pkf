@@ -5,7 +5,7 @@ title: "Exposed admin endpoint on staging cluster"
 project: P-PLATFORM
 severity: High
 discovered_date: 2026-07-05
-status: Open
+security_finding_status: Open
 owner: S003
 ---
 

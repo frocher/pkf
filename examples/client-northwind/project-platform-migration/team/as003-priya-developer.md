@@ -6,5 +6,5 @@ stakeholder: S003
 role: Developer
 side: Internal
 start_date: 2026-05-15
-status: Active
+assignment_status: Active
 ---

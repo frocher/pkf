@@ -7,7 +7,7 @@ milestone: M002
 version: "1.0.0"
 kind: Release
 release_date: 2026-10-01
-status: Planned
+delivery_status: Planned
 owner: S002
 deliverables:
   - Checkout API service

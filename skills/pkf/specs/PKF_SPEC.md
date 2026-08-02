@@ -249,7 +249,6 @@ id: <unique ID>            # REQUIRED
 type: <Type>                # REQUIRED — see §6
 title: <Short name>         # RECOMMENDED
 description: <One sentence> # RECOMMENDED
-status: <Status>            # depends on type, see §6
 owner: <ID of an object>    # depends on type
 project: <project ID>       # required for any object attached to a project
 # ... other fields specific to the type, see §6
@@ -274,6 +273,14 @@ project: <project ID>       # required for any object attached to a project
   snippets, and previews. Distinct from the body's `# Description`
   heading (§5.2), which carries long-form detail rather than a
   one-line summary.
+
+Most types also carry a closed, type-specific status enum, named
+`<type>_status` (`risk_status`, `decision_status`, `action_status`...)
+rather than the bare `status` — see §6 for which types have one and
+their allowed values. The prefix keeps it unambiguous next to OKF's
+own `status` field (a generic lifecycle value unrelated to PKF's
+per-type business status), since both specs are published from this
+repo.
 
 **Extensions:** any additional field is allowed. PKF tools MUST
 preserve unknown fields and MUST NOT reject a document for that reason
@@ -336,7 +343,7 @@ a line item in the detailed schedule.
 |---------------|------------------------------------------------------------------------------------------------------|
 | `category`    | Technical, Functional, Infrastructure, Security, Documentation, Testing, Deployment, Project Management |
 | `priority`    | Low, Medium, High, Critical (closed)                                                                  |
-| `status`      | To Do, In Progress, Blocked, On Hold, Completed, Cancelled (closed)                                   |
+| `action_status` | To Do, In Progress, Blocked, On Hold, Completed, Cancelled (closed)                                 |
 | `progress`    | percentage (0–100)                                                                                    |
 | `due_date`    | date                                                                                                   |
 
@@ -367,7 +374,7 @@ without duplicating their identity. See §8 for the full pattern.
 | `side`       | Client, Internal, Vendor (closed)                                  |
 | `start_date` | date                                                               |
 | `end_date`   | date, optional                                                     |
-| `status`     | Active, Ended (closed)                                             |
+| `assignment_status` | Active, Ended (closed)                                       |
 
 Relations: `project` (1) · `stakeholder` (1)
 
@@ -403,7 +410,7 @@ context, to avoid re-litigating the same topics months later.
 | `rationale`           | text — the main reasons behind the decision            |
 | `decision_date`       | date                                                   |
 | `impact_description`  | text — consequences (technical, schedule, budget...)   |
-| `status`              | Proposed, Approved, Implemented, Superseded (closed)   |
+| `decision_status`     | Proposed, Approved, Implemented, Superseded (closed)   |
 
 Relations: `project` (1) · `decision_maker` → Stakeholder (1) ·
 `actions` → Action (0..n) · `superseded_by` → Decision (0..1) ·
@@ -418,7 +425,7 @@ The delivery of a software, technical, or documentary product.
 | `version`                | version identifier                                                  |
 | `kind`                    | Release, Patch, Hotfix, Increment, Deployment, Documentation       |
 | `release_date`            | date                                                                  |
-| `status`                  | Planned, In Progress, Ready, Delivered, Validated, Cancelled (closed) |
+| `delivery_status`         | Planned, In Progress, Ready, Delivered, Validated, Cancelled (closed) |
 | `deliverables`            | list — items included in the delivery                               |
 | `acceptance_criteria`     | text                                                                  |
 | `environment`             | Development, Testing, Staging, Production (closed)                 |
@@ -435,7 +442,7 @@ resource...).
 | Field       | Type / Values                                     |
 |-------------|--------------------------------------------------------|
 | `kind`      | Internal, External, Technical, Functional, Resource    |
-| `status`    | Identified, In Progress, Resolved, Blocking (closed)    |
+| `dependency_status` | Identified, In Progress, Resolved, Blocking (closed)  |
 | `due_date`  | date by which the dependency must be resolved            |
 
 Relations: `project` (1) · `owner` → Stakeholder (1) · `milestones` →
@@ -451,7 +458,7 @@ an important checkpoint.
 |---------------------------|-----------------------------------------------------------|
 | `category`                 | Delivery, Validation, Technical, Business, Release        |
 | `due_date`                 | date                                                        |
-| `status`                   | Planned, In Progress, Achieved, Delayed, Cancelled (closed) |
+| `milestone_status`          | Planned, In Progress, Achieved, Delayed, Cancelled (closed) |
 | `acceptance_criteria`      | text                                                          |
 | `impact_description`       | consequences of a delay                                     |
 
@@ -474,7 +481,7 @@ A functional or technical requirement the project must satisfy.
 |-------------|-------------------------------------------------------------------|
 | `category`  | Functional, Technical, Regulatory, Security, Performance          |
 | `priority`  | Must have, Should have, Could have, Won't have (closed)           |
-| `status`    | Draft, Validated, In Progress, Implemented, Tested, Rejected (closed) |
+| `requirement_status` | Draft, Validated, In Progress, Implemented, Tested, Rejected (closed) |
 
 Relations: `project` (1) · `owner` → Stakeholder (1) · `deliveries` →
 Delivery (0..n) · `applications` → Application (0..n, inverse — §7.1)
@@ -491,7 +498,7 @@ A risk identified for a project.
 | `score`                  | Low, Medium, High, Critical (closed) — derived from probability × impact (optional; matrix in Appendix B) |
 | `plan`                   | mitigation or contingency plan                                                         |
 | `response_strategy`      | Avoid, Mitigate, Transfer, Accept (closed)                                              |
-| `status`                  | Open, Under Review, Mitigated, Accepted, Closed, Occurred (closed)                    |
+| `risk_status`              | Open, Under Review, Mitigated, Accepted, Closed, Occurred (closed)                    |
 | `review_date`             | date by which the risk should be re-assessed                                            |
 
 Relations: `project` (1) · `owner` → Stakeholder (1) · `vendors` → Vendor (0..n)
@@ -685,7 +692,7 @@ project: P-TEST-RUNS
 stakeholder: S001
 role: Sponsor
 side: Client
-status: Active
+assignment_status: Active
 ---
 ```
 
@@ -852,7 +859,7 @@ impact: High
 score: High
 owner: S001
 response_strategy: Mitigate
-status: Open
+risk_status: Open
 ---
 
 # Description
@@ -877,7 +884,7 @@ project: P-TEST-RUNS
 owner: S001
 category: Project Management
 priority: High
-status: In Progress
+action_status: In Progress
 progress: 40
 due_date: 2026-08-01
 ---
@@ -893,7 +900,7 @@ project: P-TEST-RUNS
 stakeholder: S001
 role: Sponsor
 side: Client
-status: Active
+assignment_status: Active
 ---
 ```
 

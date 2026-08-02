@@ -13,10 +13,10 @@ Objects: Action, owner → Stakeholder. See SKILL.md's object map.
    guess.
 2. **Read every Action under `<project>/actions/`.**
 3. **Bucket each Action:**
-   - *Overdue* — `due_date` is in the past and `status` is not
+   - *Overdue* — `due_date` is in the past and `action_status` is not
      `Completed` or `Cancelled`.
-   - *Blocked* — `status: Blocked`.
-   - *In progress* — `status: In Progress` or `On Hold`.
+   - *Blocked* — `action_status: Blocked`.
+   - *In progress* — `action_status: In Progress` or `On Hold`.
    - Leave `Completed` / `Cancelled` out of the default view; mention
      the count only.
 4. **Present the three buckets**, each entry showing `id`, `title`,
@@ -26,6 +26,7 @@ Objects: Action, owner → Stakeholder. See SKILL.md's object map.
    short message per owner listing their items — draft text only, the
    user decides where it's sent.
 6. **On a status/progress update request** ("mark A014 as blocked",
-   "A005 is at 80%"), propose the exact frontmatter change (`status`
-   and/or `progress`, plus any other field the user specifies) for the
+   "A005 is at 80%"), propose the exact frontmatter change
+   (`action_status` and/or `progress`, plus any other field the user
+   specifies) for the
    named Action and wait for validation before writing the file.

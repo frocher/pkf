@@ -5,6 +5,6 @@ title: "Support offline cart persistence"
 project: P-PORTAL
 category: Functional
 priority: Should have
-status: Draft
+requirement_status: Draft
 owner: S004
 ---

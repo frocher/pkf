@@ -24,7 +24,7 @@ the user before listing risks.
 ## Steps
 
 1. **Resolve scope and severity** as above.
-2. **Collect Risk objects** in scope, excluding `status: Closed`.
+2. **Collect Risk objects** in scope, excluding `risk_status: Closed`.
 3. **Compute `score`** from `probability` × `impact` for any Risk
    missing it, using the matrix in Appendix B of the PKF spec (see
    SKILL.md's object map for Risk), rather than trusting a stale
@@ -33,7 +33,7 @@ the user before listing risks.
 5. **Flag risks whose `review_date` has passed** first — these need
    re-assessment regardless of score.
 6. **Sort the rest by `score` descending**, then present: `id`,
-   `title`, `score`, `status`, `owner`, `review_date`, `plan`.
-7. **On a requested update** (mitigation plan, `status`,
+   `title`, `score`, `risk_status`, `owner`, `review_date`, `plan`.
+7. **On a requested update** (mitigation plan, `risk_status`,
    `review_date`), propose the exact frontmatter change for the named
    Risk and wait for validation before writing.

@@ -4,7 +4,7 @@ type: Dependency
 title: "Checkout API delivery from Platform Migration"
 project: P-PORTAL
 kind: Technical
-status: In Progress
+dependency_status: In Progress
 due_date: 2026-10-01
 owner: S004
 related_project: P-PLATFORM

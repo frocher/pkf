@@ -5,6 +5,6 @@ title: "Zero downtime cutover"
 project: P-PLATFORM
 category: Technical
 priority: Must have
-status: Draft
+requirement_status: Draft
 owner: S002
 ---

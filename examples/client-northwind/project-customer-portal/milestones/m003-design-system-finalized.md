@@ -5,7 +5,7 @@ title: "Design system finalized"
 project: P-PORTAL
 category: Business
 due_date: 2026-08-30
-status: In Progress
+milestone_status: In Progress
 owner: S004
 acceptance_criteria: "All core components approved by the client's brand team."
 impact_description: "Delays the start of portal build-out, which consumes the design system."

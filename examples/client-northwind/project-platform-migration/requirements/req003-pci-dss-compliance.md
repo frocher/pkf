@@ -5,6 +5,6 @@ title: "PCI DSS compliance for payment data"
 project: P-PLATFORM
 category: Regulatory
 priority: Must have
-status: Validated
+requirement_status: Validated
 owner: S003
 ---

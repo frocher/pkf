@@ -19,13 +19,15 @@ object map.
      Dependency, etc.) — flagged as worth a look, not necessarily
      wrong.
    - *Inconsistent statuses* — combinations that don't hold together,
-     e.g. an Action at `progress: 100` but `status` not `Completed`, a
-     Milestone `Achieved` while a Delivery pointing at it
-     (`Delivery.milestone`) is still `Planned`.
+     e.g. an Action at `progress: 100` but `action_status` not
+     `Completed`, a Milestone `milestone_status: Achieved` while a
+     Delivery pointing at it (`Delivery.milestone`) is still
+     `delivery_status: Planned`.
    - *Overdue but not reflected* — a `due_date` in the past on an
-     Action, Milestone, or Dependency whose `status` doesn't show it
-     (still `To Do` / `Planned` / `Identified` rather than flagged or
-     escalated).
+     Action, Milestone, or Dependency whose status field
+     (`action_status`, `milestone_status`, `dependency_status`) doesn't
+     show it (still `To Do` / `Planned` / `Identified` rather than
+     flagged or escalated).
 3. **Present findings grouped by check**, each entry naming the
    object's `id` and the specific reason it was flagged.
 4. **On a confirmed fix** (set an owner, correct a status), propose

@@ -7,7 +7,7 @@ milestone: M003
 version: "0.9.0"
 kind: Increment
 release_date: 2026-09-20
-status: Planned
+delivery_status: Planned
 owner: S004
 deliverables:
   - Beta build behind feature flag

@@ -4,7 +4,7 @@ type: Dependency
 title: "Payment gateway sandbox access"
 project: P-PLATFORM
 kind: External
-status: In Progress
+dependency_status: In Progress
 due_date: 2026-08-01
 owner: S002
 ---

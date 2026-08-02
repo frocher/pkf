@@ -10,7 +10,7 @@ score: Medium
 owner: S004
 vendors: [V002]
 response_strategy: Mitigate
-status: Under Review
+risk_status: Under Review
 plan: "Escalate the onboarding paperwork with the analytics vendor; fall back to basic in-house event logging for the beta if unresolved by M003."
 ---
 

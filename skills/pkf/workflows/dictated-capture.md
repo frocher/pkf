@@ -57,7 +57,7 @@ if the client has no `client.md` yet, the request belongs to
        a dangling reference — plus `level`/`years_of_experience`/
        `certified`.
      - Assignment — `project` (1) · `stakeholder` (1) — both must
-       already exist — plus `role`/`side`/`status`.
+       already exist — plus `role`/`side`/`assignment_status`.
    - Relations implied by the content (e.g. a Decision that references
      an Action already in the bundle).
 4. **Present the full proposed file** — target path (following the

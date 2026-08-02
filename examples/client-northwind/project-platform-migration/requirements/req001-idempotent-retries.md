@@ -5,6 +5,6 @@ title: "Checkout API must support idempotent retries"
 project: P-PLATFORM
 category: Technical
 priority: Must have
-status: In Progress
+requirement_status: In Progress
 owner: S002
 ---

@@ -6,5 +6,5 @@ stakeholder: S002
 role: Technical Lead
 side: Internal
 start_date: 2026-05-01
-status: Active
+assignment_status: Active
 ---

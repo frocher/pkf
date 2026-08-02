@@ -10,7 +10,7 @@ impact: Critical
 score: Critical
 owner: S003
 response_strategy: Mitigate
-status: Open
+risk_status: Open
 review_date: 2026-07-10
 plan: "Write a regression test suite (A006) covering the monolith's untested order-processing paths before any dual-write cutover begins."
 ---

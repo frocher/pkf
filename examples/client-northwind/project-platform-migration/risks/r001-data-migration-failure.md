@@ -10,7 +10,7 @@ impact: Critical
 score: High
 owner: S002
 response_strategy: Mitigate
-status: Open
+risk_status: Open
 plan: "Run a full dry-run migration against a production data snapshot before the cutover window; keep the legacy system read-only for 48 hours as a rollback path."
 ---
 

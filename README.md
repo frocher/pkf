@@ -44,7 +44,7 @@ category: Schedule
 probability: Medium
 impact: High
 owner: S001
-status: Open
+risk_status: Open
 ---
 
 # Description

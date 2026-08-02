@@ -17,7 +17,7 @@ SKILL.md's object map.
    project. Flag as **uncovered** any `SkillRequirement` with
    `criticality: Important` or `Critical` that has no such match.
 3. **Check load.** For each Stakeholder, count their concurrent
-   `status: Active` Assignments across all projects — a high count is
+   `assignment_status: Active` Assignments across all projects — a high count is
    load concentration worth flagging. Roll the same count up by `Team`
    via `Team.members`.
 4. **Present two lists**: uncovered skill needs (by project and

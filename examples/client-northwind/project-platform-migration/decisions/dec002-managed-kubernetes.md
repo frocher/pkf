@@ -10,5 +10,5 @@ rationale: "Removes control-plane operational burden from a small team already s
 decision_maker: S002
 decision_date: 2026-06-25
 impact_description: "Slightly higher hosting cost; no need to hire dedicated platform ops staff for the migration."
-status: Approved
+decision_status: Approved
 ---

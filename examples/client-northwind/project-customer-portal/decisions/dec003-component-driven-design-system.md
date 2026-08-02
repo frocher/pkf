@@ -10,5 +10,5 @@ rationale: "A style guide document alone has not stopped drift in the past; a sh
 decision_maker: S004
 decision_date: 2026-07-01
 impact_description: "Requires two weeks of upfront investment from the design and frontend teams before feature work resumes."
-status: Approved
+decision_status: Approved
 ---

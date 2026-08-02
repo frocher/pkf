@@ -7,7 +7,7 @@ project: P-PLATFORM
 owner: S003
 category: Security
 priority: Critical
-status: To Do
+action_status: To Do
 progress: 0
 due_date: 2026-08-20
 ---
