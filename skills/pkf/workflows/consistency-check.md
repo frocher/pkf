@@ -37,4 +37,7 @@ object map.
    object's `id` and the specific reason it was flagged.
 4. **On a confirmed fix** (set an owner, correct a status), propose
    the exact frontmatter change per object and wait for validation
-   before writing.
+   before writing. A partial baseline adoption is the one finding not
+   fixed here: point the user at `workflows/plan-baseline.md`, the
+   only workflow allowed to write a `baseline_*` field outside the
+   moment its object is created.

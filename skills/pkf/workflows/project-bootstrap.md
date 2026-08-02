@@ -27,7 +27,9 @@ does not exist yet. Two cases to distinguish before drafting anything:
 
 If the named project's `project-*/` folder already exists, this
 request doesn't belong here at all — it belongs to whichever
-operational workflow the user actually meant.
+operational workflow the user actually meant. If what they want is a
+plan baseline on a project that has none, that is
+`workflows/plan-baseline.md`.
 
 ## Steps
 

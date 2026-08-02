@@ -1,9 +1,9 @@
 ---
 name: pkf
-description: Route a project manager's or program director's natural-language request against a PKF bundle (client.md, project.md, risks/, actions/, decisions/, milestones/, deliveries/...) to the right workflow — referential bootstrap, project bootstrap, action tracking, milestone/delivery prep, dictated capture, meeting-notes ingestion, consistency checks, decision arbitration, milestone/delivery sign-off, portfolio dashboard, resource/skill monitoring, status reporting, risk review. Use when the user wants to check status, update objects, prepare a review, produce a report, or stand up a new client/project, rather than hand-editing files.
+description: Route a project manager's or program director's natural-language request against a PKF bundle (client.md, project.md, risks/, actions/, decisions/, milestones/, deliveries/...) to the right workflow — referential bootstrap, project bootstrap, action tracking, milestone/delivery prep, dictated capture, plan baseline, meeting-notes ingestion, consistency checks, decision arbitration, milestone/delivery sign-off, portfolio dashboard, resource/skill monitoring, status reporting, risk review. Use when the user wants to check status, update objects, prepare a review, produce a report, or stand up a new client/project, rather than hand-editing files.
 ---
 
-Routes a request against a PKF bundle to one of 13 workflows, without
+Routes a request against a PKF bundle to one of 14 workflows, without
 ever requiring the user to name a role or memorize the spec.
 
 ## Principle: propose, never write
@@ -16,6 +16,17 @@ re-argued in each workflow file below — but each still ends its own
 write step on a concrete "propose, then wait for validation"
 instruction, since that's the step's completion criterion, not a
 restatement of the principle.
+
+## Principle: a baseline is written once
+
+`baseline_due_date` and `baseline_effort` (§6, Milestone and Project)
+record what the project committed to. They are proposed at the moment
+their object is created — by `workflows/dictated-capture.md` for a
+Milestone, by `workflows/project-bootstrap.md` for a Project — and no
+workflow rewrites one in passing. A request that would change one is
+refused where it lands and referred to
+`workflows/plan-baseline.md`, the single named door for posing a
+missing baseline or correcting a mistyped one.
 
 ## Routing: intention first, catalogue as the net
 
@@ -51,7 +62,8 @@ bundle, and nothing in an invocation identifies who is asking.
 |---|---|---|
 | Action tracking | `workflows/action-tracking.md` | "what's in progress / blocked / overdue", "chase down owners" |
 | Milestone / delivery prep | `workflows/milestone-delivery-prep.md` | "get M004 ready", "check we're ready for the launch milestone" |
-| Dictated capture | `workflows/dictated-capture.md` | "log a risk/action/decision I just thought of", "add a new stakeholder/vendor to the team", "assign Marcus to the new project" — any addition to a bundle whose referential already exists |
+| Dictated capture | `workflows/dictated-capture.md` | "log a risk/action/decision I just thought of", "add a new stakeholder/vendor to the team", "here are the kickoff milestones", "we're shipping v2.1 on the 15th" — any addition to a bundle whose referential already exists |
+| Plan baseline | `workflows/plan-baseline.md` | "set the plan baseline on P-PORTAL", "this project has no reference dates", "the baseline on M004 has the wrong year" — posing a missing baseline or correcting a mistyped one, never re-planning |
 | Meeting-notes ingestion | `workflows/meeting-notes-ingest.md` | "file these meeting notes", "pull the actions out of this CR" |
 | Consistency check | `workflows/consistency-check.md` | "sanity-check the bundle", "find missing owners / orphaned objects" |
 
