@@ -5,7 +5,8 @@ and **severity threshold** — composable rather than bundled into one
 "role setting", so "Critical/High on my one project" is expressible
 alongside "everything on the portfolio".
 
-Objects: Risk, owner → Stakeholder. See SKILL.md's object map.
+Objects: Risk, owner → Stakeholder, milestones → Milestone. See
+SKILL.md's object map.
 
 ## Parameters
 
@@ -33,7 +34,9 @@ the user before listing risks.
 5. **Flag risks whose `review_date` has passed** first — these need
    re-assessment regardless of score.
 6. **Sort the rest by `score` descending**, then present: `id`,
-   `title`, `score`, `risk_status`, `owner`, `review_date`, `plan`.
+   `title`, `score`, `risk_status`, `owner`, `review_date`, `plan`,
+   and the Milestones the Risk threatens, by title — a schedule risk
+   is only actionable once the milestone it puts at stake is named.
 7. **On a requested update** (mitigation plan, `risk_status`,
    `review_date`), propose the exact frontmatter change for the named
    Risk and wait for validation before writing.

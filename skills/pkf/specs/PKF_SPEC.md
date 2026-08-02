@@ -102,6 +102,45 @@ software.
 - **View** — a derived representation, generated from objects and
   their relations (risk register, schedule, Excel table...), never
   hand-maintained.
+- **Baseline** — the plan a project committed to, carried by the
+  `baseline_*` fields of `Milestone` and `Project` (§6). A PKF baseline
+  is set once, at framing, and never rewritten: there is a single
+  generation, and re-baselining a PKF bundle is outside the format's
+  scope. A variance is always derived by comparing a `baseline_*`
+  field with its current counterpart; PKF never stores a variance.
+
+  Immutability is a semantic rule, not a checkable constraint: nothing
+  in a bundle distinguishes a baseline frozen at framing from a field
+  edited yesterday, and PKF defines no mechanism to prevent that edit.
+  It is stated so that consumers read a `baseline_*` field as a
+  commitment rather than as a current value.
+- **Effort** — work quantity in **person-days**, the fixed unit of
+  every PKF effort field. A bundle never declares its unit. How many
+  hours a person-day represents is a house convention outside PKF's
+  scope; consumers MUST NOT assume a conversion.
+- **Effort progress** — the share of an object's projected effort
+  already consumed: `consumed_effort / projected_effort`. It measures
+  progress against the current forecast, **not** against
+  `baseline_effort`: an object whose `remaining_effort` grows as fast
+  as its `consumed_effort` stays at the same effort progress
+  indefinitely. PKF names the ratio so that views agree on its
+  meaning; it is not a frontmatter field.
+
+  PKF defines no value parameterized by the current date. Effort
+  progress, like `Risk.score` and `projected_effort`, is a function of
+  stored fields alone: recomputing it tomorrow without editing the
+  bundle yields the same value. Quantities such as expected progress
+  at a given date, schedule variance, or days late change with the
+  reading, not with the data — they belong to the reader, and PKF
+  neither stores nor names them.
+
+  Effort progress is not `Action.progress` (§6), which is a declared
+  percentage stored on the object. `Milestone` and `Project` carry no
+  equivalent field, and the asymmetry is deliberate: an `Action` *is*
+  work, whereas a milestone is a point in time. What progresses is the
+  work leading to it, and that work is already measured — by the
+  effort fields, and by the status of the deliveries attached through
+  `Milestone.deliveries`.
 
 ### 3.1 ID grammar
 
@@ -412,9 +451,16 @@ context, to avoid re-litigating the same topics months later.
 | `impact_description`  | text — consequences (technical, schedule, budget...)   |
 | `decision_status`     | Proposed, Approved, Implemented, Superseded (closed)   |
 
+Here, `impact_description` is a **journal** entry: the consequences of
+this decision, fixed at its `decision_date`. Contrast with
+`Milestone.impact_description` and `Project.impact_description` (§6),
+which are each the **current state** — the consequences of the
+variance as it presents today, on the object that carries it.
+
 Relations: `project` (1) · `decision_maker` → Stakeholder (1) ·
 `actions` → Action (0..n) · `superseded_by` → Decision (0..1) ·
-`supersedes` → Decision (0..n, inverse — §7.1)
+`supersedes` → Decision (0..n, inverse — §7.1) · `milestones` →
+Milestone (0..n)
 
 ### Delivery
 
@@ -457,18 +503,57 @@ an important checkpoint.
 | Field                   | Type / Values                                            |
 |---------------------------|-----------------------------------------------------------|
 | `category`                 | Delivery, Validation, Technical, Business, Release        |
-| `due_date`                 | date                                                        |
-| `milestone_status`          | Planned, In Progress, Achieved, Delayed, Cancelled (closed) |
+| `baseline_due_date`        | date — the committed date, frozen at baseline (§3)          |
+| `due_date`                 | date — the current projected date                           |
+| `achieved_date`            | date — the date the milestone was actually reached          |
+| `milestone_status`         | Planned, In Progress, Achieved, Cancelled (closed)          |
+| `baseline_effort`          | number — person-days, frozen at baseline (§3)               |
+| `consumed_effort`          | number — person-days spent to date                          |
+| `remaining_effort`         | number — person-days still to spend                         |
+| `projected_effort`         | number — derived from `consumed_effort` + `remaining_effort` (optional; Appendix C) |
 | `acceptance_criteria`      | text                                                          |
-| `impact_description`       | consequences of a delay                                     |
+| `impact_description`       | consequences of a variance from the baseline, on either axis |
+
+A milestone's effort fields cover a **disjoint work package**: each
+milestone carries the effort of its own package, and a given
+person-day is counted under exactly one milestone of the project. This
+is a semantic rule, not a checkable constraint — PKF declares no
+ordering between milestones — but it is what makes the sum of a
+project's milestones comparable with the project's own figures.
 
 Relations: `project` (1) · `owner` → Stakeholder (1) · `deliveries` →
 Delivery (0..n, inverse — §7.1) · `dependencies` → Dependency (0..n,
-inverse — §7.1)
+inverse — §7.1) · `decisions` → Decision (0..n, inverse — §7.1) ·
+`risks` → Risk (0..n, inverse — §7.1)
 
 ### Project
 
 A software project developed for a client.
+
+| Field                 | Type / Values                                                       |
+|-----------------------|-----------------------------------------------------------------------|
+| `start_date`          | date — the planned start, then the actual one once the project begins |
+| `baseline_due_date`   | date — the committed end date, frozen at baseline (§3)                |
+| `due_date`            | date — the current projected end date                                 |
+| `achieved_date`       | date — the date the project actually ended                            |
+| `project_status`      | Planned, In Progress, Achieved, Cancelled (closed)                    |
+| `baseline_effort`     | number — person-days, frozen at baseline (§3)                         |
+| `consumed_effort`     | number — person-days spent to date                                    |
+| `remaining_effort`    | number — person-days still to spend                                   |
+| `projected_effort`    | number — derived from `consumed_effort` + `remaining_effort` (optional; Appendix C) |
+| `impact_description`  | consequences of a variance from the baseline, on either axis |
+
+`start_date` is an origin, not a commitment: it is the only date in
+this table that is meant to be overwritten — planned while the
+project has not started, replaced by the actual start once it has. It
+has no `baseline_` counterpart, because the commitment PKF tracks is
+the end date.
+
+A project's effort and date fields are entered directly on the
+project, not aggregated from its milestones — a partial breakdown
+would otherwise produce a project-level figure that looks complete.
+The two remain comparable, and a divergence is a signal rather than an
+error.
 
 Relations: `client` (1) · `milestones` → Milestone (0..n, inverse —
 §7.1) · `deliveries` → Delivery (0..n, inverse — §7.1)
@@ -501,7 +586,8 @@ A risk identified for a project.
 | `risk_status`              | Open, Under Review, Mitigated, Accepted, Closed, Occurred (closed)                    |
 | `review_date`             | date by which the risk should be re-assessed                                            |
 
-Relations: `project` (1) · `owner` → Stakeholder (1) · `vendors` → Vendor (0..n)
+Relations: `project` (1) · `owner` → Stakeholder (1) · `vendors` →
+Vendor (0..n) · `milestones` → Milestone (0..n)
 
 ### Skill
 
@@ -635,9 +721,11 @@ without its counterpart:
 | `Delivery.milestone`        | `Milestone.deliveries`      |
 | `Dependency.milestones`     | `Milestone.dependencies`    |
 | `Risk.vendors`              | `Vendor.risks`              |
+| `Risk.milestones`           | `Milestone.risks`           |
 | `Application.requirements`  | `Requirement.applications`  |
 | `Team.members`              | `Stakeholder.team`          |
 | `Decision.superseded_by`    | `Decision.supersedes`       |
+| `Decision.milestones`       | `Milestone.decisions`       |
 
 This table is exhaustive: every relation pair declared on both sides in
 §6 appears in it. `Team.members` is the exception to the child-side
@@ -920,3 +1008,21 @@ omitted from a bundle; when present, it SHOULD match this matrix.
 | Medium                | Medium | Medium | High     | High     |
 | High                  | Medium | High   | High     | Critical |
 | Very High             | Medium | High   | Critical | Critical |
+
+---
+
+## Appendix C — Projected effort
+
+`projected_effort` is derived from `consumed_effort` and
+`remaining_effort`: a tool computes it rather than reading a
+hand-authored value, per Goal 4 (§1) — a stored, hand-maintained
+figure would desynchronize from its two inputs as soon as either is
+edited.
+
+```
+projected_effort = consumed_effort + remaining_effort
+```
+
+It MAY be omitted from a bundle; when present, it SHOULD match this
+computation. The variance from the baseline —
+`projected_effort − baseline_effort` — is never stored, in any field.

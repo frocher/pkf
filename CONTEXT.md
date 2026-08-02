@@ -49,3 +49,18 @@ next to OKF's own `status` field, which is a generic lifecycle value
 (`draft`/`stable`/`deprecated`) with no relation to PKF's meaning. See
 [ADR-0004](docs/adr/0004-per-type-status-field-names.md).
 _Avoid_: `status` alone in PKF object frontmatter.
+
+**Baseline**:
+The plan a project committed to, carried by the `baseline_*` fields of
+Milestone and Project. Set once at framing and never rewritten — PKF
+has a single generation of baseline and no re-baselining. A variance
+is always derived from it, never stored.
+_Avoid_: Target, original plan, snapshot — and never speak of
+"updating the baseline".
+
+**Effort**:
+Work quantity in person-days, the fixed unit of every PKF effort
+field.
+_Avoid_: Load, workload — both are reserved against in
+`resource-skill-monitoring`, where `assignment spread` counts
+assignments rather than effort.

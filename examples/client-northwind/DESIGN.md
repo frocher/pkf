@@ -43,8 +43,8 @@ that stand on their own if nothing else gets read.
 - **Primary (#1B3A5C):** Section headings and the report's masthead.
 - **Secondary (#5B7A99):** Supporting text — dates, owners, captions.
 - **Accent (#C1440E):** The only color used to flag risk — a Critical
-  or High severity marker, an overdue Action, a Delayed Milestone.
-  Never used decoratively, so it keeps its urgency.
+  or High severity marker, an overdue Action, a late or slipped
+  Milestone. Never used decoratively, so it keeps its urgency.
 - **Neutral (#F5F3EF):** Page background — warm enough to not read as
   a bare white export.
 

@@ -12,15 +12,20 @@ Objects: Milestone, Delivery. See SKILL.md's object map.
 1. **Resolve scope.** Default is every project in the bundle; narrow
    to one if named.
 2. **Collect the candidates**: Milestones/Deliveries whose date is
-   within the near term, plus any already `milestone_status: Delayed`
-   regardless of date.
+   within the near term, plus any Milestone already late —
+   `due_date` past with no `achieved_date` — regardless of how far
+   past.
 3. **For each, read `acceptance_criteria`** and the status of what
    feeds it (its Deliveries for a Milestone, its `milestone` for a
    Delivery) — enough to judge readiness, not a task-by-task audit.
 4. **Present a go/no-go recommendation per item**, grouped by project:
    ready, at risk (name the gap), or already late.
-5. **On the director's ruling**, propose the field change — Milestone
-   `milestone_status` (`Achieved`, `Delayed`, `Cancelled`) with
-   `impact_description` filled in when delayed; Delivery
-   `delivery_status` (`Ready`, `Delivered`, `Validated`, `Cancelled`) —
-   and wait for validation before writing.
+5. **On the director's ruling**, propose the field change — for a
+   Milestone, `milestone_status` (`Achieved`, `Cancelled`),
+   `achieved_date` when it is reached, and, on a no-go, a new
+   projected `due_date` with `impact_description` filled in;
+   `baseline_due_date` is never touched. For a Delivery,
+   `delivery_status` (`Ready`, `Delivered`, `Validated`, `Cancelled`).
+   Wait for validation before writing. If the slip goes to committee,
+   the `Decision` that records it attaches to the Milestone via
+   `Decision.milestones`.

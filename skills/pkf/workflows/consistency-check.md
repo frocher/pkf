@@ -28,6 +28,11 @@ object map.
      (`action_status`, `milestone_status`, `dependency_status`) doesn't
      show it (still `To Do` / `Planned` / `Identified` rather than
      flagged or escalated).
+   - *Partial baseline* — within one project, some Milestones carry
+     `baseline_due_date` or `baseline_effort` and others don't. A
+     bundle with no baseline at all is fine; a half-baselined set of
+     milestones is not, because the project's totals are then compared
+     against an incomplete sum rather than against nothing.
 3. **Present findings grouped by check**, each entry naming the
    object's `id` and the specific reason it was flagged.
 4. **On a confirmed fix** (set an owner, correct a status), propose

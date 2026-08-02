@@ -44,7 +44,10 @@ if the client has no `client.md` yet, the request belongs to
      relations below instead.)
    - Type-specific fields inferred from what was said, leaving a field
      out rather than inventing a value with no basis in what was said:
-     - Risk — `category`/`probability`/`impact`.
+     - Risk — `category`/`probability`/`impact`, plus `milestones` (→
+       Milestone list) when the statement names a milestone the risk
+       threatens. The Milestone must already exist; if it doesn't, say
+       so rather than drafting a dangling reference.
      - Action — `priority`/`due_date`.
      - Decision — `context`/`alternatives`.
      - Stakeholder — `job_title`/`email`/`phone`, `organization` (→
