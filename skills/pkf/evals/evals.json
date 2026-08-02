@@ -90,11 +90,12 @@
     {
       "id": 9,
       "prompt": "Are we short on any critical skills anywhere, and is anyone overloaded across projects?",
-      "expected_output": "Routes to workflows/resource-skill-monitoring.md, scope = whole client. Flags SR003 (React, criticality Critical) as uncovered if no Advanced-level React Competency is held by an actively-assigned stakeholder, and reports Assignment load per stakeholder/team.",
+      "expected_output": "Routes to workflows/resource-skill-monitoring.md, scope = whole client. Flags SR003 (React, criticality Critical) as uncovered if no Advanced-level React Competency is held by an actively-assigned stakeholder, and reports assignment spread per stakeholder/team, stated as a count of assignments rather than as workload.",
       "expectations": [
         "Routes to resource-skill-monitoring, not portfolio-dashboard",
         "Checks SkillRequirement coverage via Competency + Active Assignment, not just Skill existence in the catalog",
-        "Reports load in aggregate (per stakeholder/team counts), not a per-person narrative"
+        "Reports spread in aggregate (per stakeholder/team counts), not a per-person narrative",
+        "Does not present the count as workload — labels it as a count of assignments"
       ]
     },
     {

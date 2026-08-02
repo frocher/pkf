@@ -62,7 +62,7 @@ bundle, and nothing in an invocation identifies who is asking.
 | Decision arbitration | `workflows/decision-arbitration.md` | "what decisions are waiting on me", "approve/reject D0xx" |
 | Milestone / delivery sign-off | `workflows/milestone-delivery-signoff.md` | "go/no-go on the upcoming milestones", "which deliveries are at risk" |
 | Portfolio dashboard | `workflows/portfolio-dashboard.md` | "show me the portfolio", "where is it stuck across projects" |
-| Resource & skill monitoring | `workflows/resource-skill-monitoring.md` | "are we short on any skills", "how loaded are the teams" |
+| Resource & skill monitoring | `workflows/resource-skill-monitoring.md` | "are we short on any skills", "who is spread across the most projects" |
 
 **Cross-cutting — parameterized by role, not duplicated**
 
