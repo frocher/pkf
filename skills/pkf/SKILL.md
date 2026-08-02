@@ -122,3 +122,91 @@ mechanics rather than a single type:
 
 `specs/OKF_SPEC.md` is embedded alongside PKF for reference only — no
 workflow in this skill targets it.
+
+## Reading variance from the baseline
+
+`Milestone` and `Project` carry a baseline alongside their current values
+(see [Baseline](specs/PKF_SPEC.md#3-terminology)). Every variance is
+**derived** by comparing the two; PKF stores none. Four workflows read
+this the same way — `milestone-delivery-prep`,
+`milestone-delivery-signoff`, `status-reporting` and `portfolio-dashboard`
+— so it is defined once here. Each names the slice it shows rather than
+restating the rules.
+
+**Milestone health — three states computed, one declared.**
+
+- **late** — `due_date` past with no `achieved_date`
+- **slipped** — `due_date` later than `baseline_due_date`
+- **delivered late** — `achieved_date` later than `baseline_due_date`
+- **threatened** — an open `Risk` names the milestone through
+  `Milestone.risks`
+
+A milestone can be slipped without being late, and late without having
+slipped. The first three are computed from dates; the fourth is
+**declared** by whoever opened the risk. Never put threatened in the same
+column as the other three — it would pass a judgement off as a
+measurement.
+
+These states have a life cycle, and it needs no rule of its own: writing
+`achieved_date` stops a milestone being *late* and makes it *delivered
+late* — or nothing at all, if it landed on time. The variance freezes by
+itself once the date is recorded.
+
+**Effort drift — one fact, two forms.** `projected_effort` against
+`baseline_effort`, expressed either way but never both in the same output:
+
+- **in person-days** where the reader knows the size of the object and
+  will act on it;
+- **as crossed percentages** — `consumed_effort / baseline_effort` (the
+  share of the commitment already spent) against [effort
+  progress](specs/PKF_SPEC.md#3-terminology) (the share of the work done)
+  — where objects of different sizes are compared. "+400 person-days"
+  says nothing without knowing whether the project is worth 500 or 5,000.
+
+The two forms are the same fact: their ratio is `projected_effort /
+baseline_effort`. **Effort progress never appears alone** — on its own it
+reads as progress against the commitment, which is the denominator trap
+the spec warns about. And no composite indicator: no health score, no
+schedule or cost index. The two axes are independent, and a single figure
+hides which one moved.
+
+**Thresholds are binary; altitude changes the sort, not the threshold.**
+The date states above are comparisons, with nothing to threshold. On
+effort the threshold is zero: `projected_effort > baseline_effort`. A
+workflow that must show fewer lines **sorts by magnitude** — days
+slipped, percentage over — and cuts the list explicitly; it never raises
+a bar.
+
+**When the baseline is absent, say nothing.** An object carrying no
+`baseline_*` field produces no line, no empty column and no "variance not
+measurable": every field is optional and a bundle without a baseline is
+legitimate. What *is* reported is a **half-entered** one, because the
+reading then breaks midway:
+
+- `baseline_due_date` with no `due_date`;
+- `consumed_effort` with no `baseline_effort`;
+- a baseline set and never re-forecast — no `remaining_effort`, or
+  `projected_effort` still equal to `baseline_effort`.
+
+Each of these takes **the place of the figure it replaces** — where a
+report would print `+18 days` it prints `variance not computable — no
+baseline date`. It never gets a section of its own. Comparing objects
+*with each other* is `consistency-check`'s job, not a report's.
+
+**The object's own figures prevail.** A project's dates and effort are
+entered on the project, not aggregated from its milestones. When the two
+disagree, the project's figures are the ones reported and the divergence
+is a **single reservation** printed beside them, naming which of the
+three effort sums diverge — never four separate lines, and never a
+substitution. A milestone dated past the project's `due_date` is
+different in kind: it is a planning fact, not a reservation about the
+breakdown, and it belongs with the date states above.
+
+**Why a variance happened.** A `Decision` linked through
+`Milestone.decisions` is cited with the slip it explains. Its absence is
+not reported at project level — an unexplained slip is the ordinary case
+— but a director's view says it, because a slip with no `Decision` is one
+that never went through a committee. `Milestone.impact_description` is
+the current state and always takes precedence; `Decision.impact_description`
+appears only inside the citation of that decision, as a dated historical
+gloss, never in its place.

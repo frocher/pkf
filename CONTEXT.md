@@ -64,3 +64,20 @@ field.
 _Avoid_: Load, workload — both are reserved against in
 `resource-skill-monitoring`, where `assignment spread` counts
 assignments rather than effort.
+
+**Milestone health**:
+The four states a milestone can be in against its baseline — *late*,
+*slipped*, *delivered late*, all three computed from dates, and
+*threatened*, declared by an open Risk through `Milestone.risks`.
+Defined once in `SKILL.md`; workflows cite it rather than restating
+it.
+_Avoid_: Delayed — the enum value removed in #48 — and any wording
+that puts *threatened* in the same list as the three computed
+states.
+
+**Effort drift**:
+`projected_effort` measured against `baseline_effort`, shown either
+in person-days or as crossed percentages, never both in the same
+output.
+_Avoid_: Health score, SPI, CPI, or any single figure combining the
+delay and effort axes.

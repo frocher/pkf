@@ -17,9 +17,19 @@ Objects: Milestone, Delivery. See SKILL.md's object map.
    past.
 3. **For each, read `acceptance_criteria`** and the status of what
    feeds it (its Deliveries for a Milestone, its `milestone` for a
-   Delivery) — enough to judge readiness, not a task-by-task audit.
+   Delivery) — enough to judge readiness, not a task-by-task audit —
+   plus its standing against the baseline, per SKILL.md's *Reading
+   variance from the baseline*: days slipped, effort drift in
+   person-days, and whether a `Decision` explains the slip. **A slip
+   with no `Decision` linked through `Milestone.decisions` is worth
+   naming**: it is a report that never went through a committee,
+   which is this workflow's business and nobody else's.
 4. **Present a go/no-go recommendation per item**, grouped by project:
-   ready, at risk (name the gap), or already late.
+   ready, at risk (name the gap), or already late. Sort by magnitude
+   — days slipped, then effort over baseline — and cut the list
+   explicitly rather than raising a bar. List any Milestone
+   threatened by an open Risk separately from the computed states: it
+   is declared, not measured.
 5. **On the director's ruling**, propose the field change — for a
    Milestone, `milestone_status` (`Achieved`, `Cancelled`),
    `achieved_date` when it is reached, and, on a no-go, a new

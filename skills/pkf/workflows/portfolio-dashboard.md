@@ -21,6 +21,15 @@ object map.
      (`achieved_date` later than `baseline_due_date`), plus any
      upcoming within the near term. A milestone can be slipped without
      being late, and late without having slipped.
+   - Effort standing, as crossed percentages so projects compare: the
+     share of `baseline_effort` already consumed against effort
+     progress (SKILL.md, *Reading variance from the baseline*). Mark
+     the row where the project's figures and the sum of its
+     milestones diverge, or where a milestone is dated past the
+     project's `due_date`.
+   - Milestones threatened by an open `Risk` (`Milestone.risks`),
+     counted separately from the computed states — threatened is
+     declared, not measured.
    - Decision backlog: count at `decision_status: Proposed`, and how long the
      oldest has waited (`decision_date` absent, so use context/git
      history if asked).
@@ -31,6 +40,9 @@ object map.
    concerning.
 5. **Answer follow-ups by re-querying**, not by exporting: "show me
    Portal's Critical risks" pulls that project's Risk objects live.
+   The dashboard carries no `impact_description` and cites no
+   `Decision` — prose would destroy the table; hand off to
+   milestone-delivery-signoff for the why behind a slip.
 6. **This workflow is read-only.** If the director wants to act on a
    finding — arbitrate a decision, sign off a milestone, dig into
    risks — hand off to decision-arbitration,
