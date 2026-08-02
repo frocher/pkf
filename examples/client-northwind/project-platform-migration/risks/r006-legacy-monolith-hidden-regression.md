@@ -18,10 +18,34 @@ plan: "Write a regression test suite (A006) covering the monolith's untested ord
 # Description
 
 The legacy monolith has no automated regression coverage for several
-order-processing code paths exercised only under specific promo and
-refund combinations. A silent regression here would surface only once
-the phased cutover (DEC004) starts routing live traffic through both
-systems.
+order-processing code paths, and the specific paths that are
+uncovered are not the common ones — they are exercised only under
+specific combinations of promotional discounts and refunds, the kind
+of interaction that rarely shows up in manual testing because it
+requires deliberately constructing an unusual order rather than
+walking through a typical purchase flow. That combination of "rare to
+trigger" and "untested" is exactly what makes this risk dangerous:
+nothing about the current system's day-to-day behavior gives any
+signal that these paths are fragile, because they mostly aren't being
+exercised at all in production traffic patterns today.
+
+The danger becomes concrete once the cutover strategy in `DEC004`
+resolves toward a phased dual-write approach, which is the direction
+that decision is currently leaning: during that phase, the new
+platform starts routing live traffic through both the new
+microservices and the legacy monolith side by side, which means the
+monolith's untested paths would, for the first time, be exercised
+under real production load and real customer-generated promo-and-
+refund combinations rather than staying dormant. A silent regression
+there would not throw an obvious error — it would produce an
+incorrect order or refund total that might not be noticed until a
+customer complains or a finance reconciliation catches a discrepancy,
+by which point it may have affected a number of orders rather than
+just one. This is why the risk is scored Critical (High probability,
+Critical impact) despite the paths in question being individually
+rare: the phased cutover is specifically the moment that removes the
+one thing currently protecting the project from this exposure, which
+is that the untested paths simply aren't being hit yet.
 
 # Comments
 
