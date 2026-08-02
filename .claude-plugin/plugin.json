@@ -1,0 +1,27 @@
+{
+    "name": "pkf-skills",
+    "version": "1.0.0",
+    "description": "PKF skill for project management",
+    "author": {
+      "name": "Fred Rocher"
+    },
+    "repository": "https://github.com/frocher/pkf",
+    "license": "Apache-2.0",
+    "keywords": [
+      "project-management",
+      "project-planning",
+      "project-tracking",
+      "project-documentation",
+      "project-reporting",
+      "project-evaluation",
+      "project-review",
+      "project-retrospective",
+      "project-inception",
+      "project-kickoff",
+      "project-definition",
+      "project-scope"
+    ],
+    "skills": [
+      "./skills/pkf"
+    ]
+  }

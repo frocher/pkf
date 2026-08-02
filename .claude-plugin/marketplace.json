@@ -1,0 +1,29 @@
+{
+    "name": "frocher",
+    "owner": {
+      "name": "Fred Rocher"
+    },
+    "description": "PKF skill for project management",
+    "plugins": [
+      {
+        "name": "pkf-skills",
+        "source": "./",
+        "description": "PKF skill for project management",
+        "category": "project-management",
+        "keywords": [
+          "project-management",
+          "project-planning",
+          "project-tracking",
+          "project-documentation",
+          "project-reporting",
+          "project-evaluation",
+          "project-review",
+          "project-retrospective",
+          "project-inception",
+          "project-kickoff",
+          "project-definition",
+          "project-scope"
+        ]
+      }
+    ]
+  }
