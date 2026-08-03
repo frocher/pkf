@@ -23,6 +23,9 @@ consume the PKF model:
   indexes bundles, resolves typed relations, derives inverse relations,
   and reports diagnostics. It is independent of Obsidian and is shared
   by future PKF tools.
+- `tools/pkf-cli/` — a TypeScript command-line interface over
+  `pkf-core`, with `pkf inspect` for Bundle summaries and `pkf lint`
+  for diagnostics.
 - `README.md` — entry point and overview.
 - `LICENSE.md` — Apache License 2.0.
 

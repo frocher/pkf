@@ -75,6 +75,8 @@ impact assessment, leading to delays and cost overruns.
   resolves typed Relations, derives inverse Relations, and reports
   diagnostics. It has no dependency on Obsidian or a particular user
   interface.
+- [`tools/pkf-cli/`](tools/pkf-cli/) — the command-line interface for
+  inspecting and linting a Bundle. It builds on `@pkf/core`.
 
 To work on the core package:
 
@@ -84,6 +86,16 @@ npm install
 npm test
 npm run typecheck
 npm run build
+```
+
+To run the CLI from its package directory:
+
+```bash
+cd tools/pkf-cli
+npm install
+npm run build
+node dist/main.js inspect ../../examples/client-northwind
+node dist/main.js lint ../../examples/client-northwind
 ```
 
 ## Status
