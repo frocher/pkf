@@ -86,4 +86,33 @@ describe("parseMarkdownObject", () => {
 
     expect(result.kind).toBe("narrative");
   });
+
+  it("treats a frontmatter without 'id' and without 'type' as non-PKF narrative", () => {
+    const result = parseMarkdownObject({
+      path: "DESIGN.md",
+      content:
+        "---\nname: Steering Report\ncolors:\n  primary: \"#1B3A5C\"\n---\n\n# Steering\n",
+    });
+
+    expect(result.kind).toBe("narrative");
+    expect(result.path).toBe("DESIGN.md");
+    expect(result.diagnostics).toEqual([
+      {
+        code: "PKF012",
+        severity: "info",
+        message: "Markdown file is not a PKF object (no 'id' or 'type').",
+        path: "DESIGN.md",
+      },
+    ]);
+  });
+
+  it("still flags a missing 'id' as invalid when 'type' is present", () => {
+    const result = parseMarkdownObject({
+      path: "missing-id.md",
+      content: "---\ntype: Risk\n---\n",
+    });
+
+    expect(result.kind).toBe("invalid");
+    expect(result.diagnostics[0]?.code).toBe("PKF003");
+  });
 });

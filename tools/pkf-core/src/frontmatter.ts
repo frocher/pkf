@@ -111,13 +111,31 @@ export function parseMarkdownObject(source: MarkdownSource): ParsedDocument {
   const type = frontmatter.type;
   const diagnostics: Diagnostic[] = [];
 
-  if (typeof id !== "string" || id.trim() === "") {
+  const hasId = typeof id === "string" && id.trim() !== "";
+  const hasType = typeof type === "string" && type.trim() !== "";
+
+  if (!hasId && !hasType) {
+    return {
+      kind: "narrative",
+      path: source.path,
+      diagnostics: [
+        {
+          code: "PKF012",
+          severity: "info",
+          message: "Markdown file is not a PKF object (no 'id' or 'type').",
+          path: source.path,
+        },
+      ],
+    };
+  }
+
+  if (!hasId) {
     diagnostics.push(
       diagnostic("PKF003", "Object must have a non-empty string 'id'.", source.path, "id"),
     );
   }
 
-  if (typeof type !== "string" || type.trim() === "") {
+  if (!hasType) {
     diagnostics.push(
       diagnostic(
         "PKF004",

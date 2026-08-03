@@ -71,6 +71,28 @@ describe("pkf", () => {
     expect(invalidBundle.stdout).toContain("ERROR PKF006 invalid.md [r001] id:");
   });
 
+  it("treats a non-PKF Markdown file as narrative, not as an error", async () => {
+    const root = await mkdtemp(join(tmpdir(), "pkf-cli-design-"));
+
+    await writeFile(
+      join(root, "client.md"),
+      "---\nid: C001\ntype: Client\n---\n",
+    );
+    await writeFile(
+      join(root, "DESIGN.md"),
+      '---\nname: Steering Report\ncolors:\n  primary: "#1B3A5C"\n---\n',
+    );
+
+    const lint = await runCli(["lint", root]);
+    const inspect = await runCli(["inspect", root]);
+
+    expect(lint.exitCode).toBe(0);
+    expect(lint.stdout).toContain("INFO PKF012 DESIGN.md");
+    expect(lint.stdout).toContain("0 errors, 0 warnings");
+    expect(inspect.exitCode).toBe(0);
+    expect(inspect.stdout).toContain("Objects: 1");
+  });
+
   it("prints usage for a missing or unknown command", async () => {
     await expect(runCli([])).resolves.toEqual({
       exitCode: 2,
