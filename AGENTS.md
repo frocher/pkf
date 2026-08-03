@@ -5,8 +5,8 @@ Guidance for AI coding agents working in this repository.
 ## What this repository is
 
 This repo is the home of two open specifications, published as Markdown
-documents, and a Claude Code skill that operates on them — there is no
-application code, build system, or test suite:
+documents, a Claude Code skill that operates on them, and tools that
+consume the PKF model:
 
 - `skills/pkf/specs/PKF_SPEC.md` — Project Knowledge Format: a spec for
   representing a project's risks, actions, decisions, milestones,
@@ -19,11 +19,32 @@ application code, build system, or test suite:
   (project manager / program director) over a PKF bundle; see
   `skills/pkf/SKILL.md`. The specs live under `skills/pkf/specs/` so
   the skill is self-contained.
+- `tools/pkf-core/` — a TypeScript library that parses PKF objects,
+  indexes bundles, resolves typed relations, derives inverse relations,
+  and reports diagnostics. It is independent of Obsidian and is shared
+  by future PKF tools.
 - `README.md` — entry point and overview.
 - `LICENSE.md` — Apache License 2.0.
 
-Work here is writing and editing specification prose, and skill
-workflow prose, not application code.
+Most work here is specification prose and skill workflow prose.
+Application code belongs under `tools/`, where each tool keeps its own
+build, tests, and runtime dependencies.
+
+## Editing tools
+
+- Keep `pkf-core` independent of consumers such as Obsidian, a CLI, or
+  a web interface. It owns PKF parsing, indexing, relation resolution,
+  and diagnostics; adapters belong in their consuming tool.
+- Preserve the public TypeScript interface exported by
+  `tools/pkf-core/src/index.ts`. Add behavior behind this interface
+  rather than exposing internal indexes or parser helpers.
+- Test behavior through the public `@pkf/core` interface. Use PKF's
+  terminology from `CONTEXT.md` and the specification as the source of
+  truth for grammar and relation semantics.
+- Run `npm test`, `npm run typecheck`, and `npm run build` from
+  `tools/pkf-core/` before committing changes there.
+- Do not commit `node_modules/`, `dist/`, coverage output, or other
+  generated build artifacts.
 
 ## Editing the specs
 

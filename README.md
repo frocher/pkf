@@ -68,10 +68,28 @@ impact assessment, leading to delays and cost overruns.
   example bundle exercising every object type in the PKF spec,
   including cross-project relations and intentional edge cases.
 
+## Tools
+
+- [`tools/pkf-core/`](tools/pkf-core/) — the shared TypeScript core for
+  PKF tools. It parses Markdown frontmatter, indexes Objects by ID,
+  resolves typed Relations, derives inverse Relations, and reports
+  diagnostics. It has no dependency on Obsidian or a particular user
+  interface.
+
+To work on the core package:
+
+```bash
+cd tools/pkf-core
+npm install
+npm test
+npm run typecheck
+npm run build
+```
+
 ## Status
 
 Both specifications are v0.1 drafts. Interfaces and object definitions
-may still change.
+may still change. The tools are pre-1.0 and evolve with the drafts.
 
 ## License
 
