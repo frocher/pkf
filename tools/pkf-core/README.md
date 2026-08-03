@@ -1,29 +1,37 @@
 # `@pkf/core`
 
-Shared TypeScript core for PKF tools.
+Shared TypeScript core for PKF tools. It owns PKF parsing, indexing,
+relation resolution, and diagnostics. Consumers (Obsidian, the CLI,
+future tools) should depend on the public surface exported from
+`@pkf/core` rather than reimplementing that logic.
 
-The first slice provides:
+The public surface provides:
 
-- Markdown frontmatter parsing;
-- narrative-document detection;
-- PKF Object records;
-- indexing by ID and path;
-- text and type search;
-- typed authored Relation resolution;
-- computed inverse Relation edges;
-- duplicate-ID and parsing diagnostics.
+- `parseMarkdownObject(source)` — turns a Markdown document into a
+  `ParsedDocument` (`object` / `narrative` / `invalid`) together with
+  any frontmatter or ID diagnostics raised while parsing.
+- `buildBundleIndex(sources, options?)` — indexes a stream of
+  `MarkdownSource` documents and returns a `BundleIndex`:
+  - `size`, `getById`, `getByPath`;
+  - `search({ text?, type? })` over `id`, `type`, `title`,
+    `description`, and `body`;
+  - `relationsOf(id)` — authored edges originating from the object
+    plus computed inverse edges;
+  - `referencedBy(id)` — authored edges whose target is the object;
+  - `diagnostics()` — frontmatter, ID, duplicate, and relation
+    diagnostics emitted while indexing.
+- `PKF_RELATION_DEFINITIONS` plus `getRelationDefinition` and
+  `getRelationDefinitions` for the default relation registry.
+- `isValidPkfId(id, type)` for the ID grammar check.
 
 Extension relation definitions can be supplied through the optional
 `relationDefinitions` argument of `buildBundleIndex`. A custom inverse
-requires both the authored and inverse definitions in that registry.
+requires both the authored definition and its inverse definition in
+that registry; the inverse edge is only computed when its
+`RelationDefinition` has `authored: false`.
 
-`relationsOf(id)` returns authored and computed inverse edges originating
-from the object. `referencedBy(id)` returns authored edges whose target is
-the object.
-
-The package is intentionally independent of Obsidian. Obsidian, the
-CLI, the linter, and report generators should consume this package
-through its public interface rather than reimplementing PKF parsing.
+The package is intentionally independent of Obsidian and of any
+particular CLI front-end.
 
 ## Development
 
