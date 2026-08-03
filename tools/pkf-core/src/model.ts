@@ -46,10 +46,39 @@ export interface SearchQuery {
   type?: string;
 }
 
+export type RelationCardinality = "1" | "0..1" | "0..n" | "1..n";
+
+export interface RelationDefinition {
+  sourceType: string;
+  field: string;
+  targetTypes: readonly string[];
+  cardinality: RelationCardinality;
+  authored: boolean;
+  inverse?: {
+    sourceType: string;
+    field: string;
+  };
+}
+
+export interface RelationEdge {
+  source: PkfObject;
+  target: PkfObject;
+  targetId: string;
+  field: string;
+  direction: "authored" | "inverse";
+  definition: RelationDefinition;
+}
+
+export interface BundleIndexOptions {
+  relationDefinitions?: readonly RelationDefinition[];
+}
+
 export interface BundleIndex {
   readonly size: number;
   getById(id: string): PkfObject | undefined;
   getByPath(path: string): PkfObject | undefined;
   search(query?: SearchQuery): PkfObject[];
+  relationsOf(id: string): RelationEdge[];
+  referencedBy(id: string): RelationEdge[];
   diagnostics(): Diagnostic[];
 }

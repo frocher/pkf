@@ -1,4 +1,5 @@
 import { parseDocument } from "yaml";
+import { isValidPkfId } from "./ids.js";
 import type {
   Diagnostic,
   MarkdownSource,
@@ -29,12 +30,6 @@ function diagnostic(
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
-}
-
-function hasValidIdGrammar(id: string, type: string): boolean {
-  return type === "Project"
-    ? /^P-[A-Z0-9-]+$/.test(id)
-    : /^[A-Z]+[0-9]+$/.test(id);
 }
 
 function splitFrontmatter(content: string):
@@ -144,7 +139,7 @@ export function parseMarkdownObject(source: MarkdownSource): ParsedDocument {
   const objectId = id as string;
   const objectType = type as string;
 
-  if (!hasValidIdGrammar(objectId, objectType)) {
+  if (!isValidPkfId(objectId, objectType)) {
     diagnostics.push({
       code: "PKF006",
       severity: "error",
